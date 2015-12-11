@@ -1,0 +1,23 @@
+.jumbotron {
+	color: blue;
+}
+
+.col-md-4 {
+	text-align: center;
+}
+
+#verbs {
+	text-align: center;
+	margin-top: 20px;
+}
+.center {
+	border-right: 1px solid black;
+}
+
+.bottom {
+	border-bottom: 1px solid black;
+}
+
+.conjugation {
+	font-size: 18px;
+}
