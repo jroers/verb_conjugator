@@ -40,8 +40,7 @@ app.get('/api/verbs', function verbList (req, res) {
 });
 
 app.get('/api/verbs/:infinitive', function verbList (req, res) {
-	console.log({infinitive: req.params.infinitive});
-	db.Verb.findOne({infinitive: req.params.infinitive}, function (err, success) {
+	db.Verb.findOne(req.params, function (err, success) {
 		if (err) { return console.log(err); }
 		res.send(success);
 	});
