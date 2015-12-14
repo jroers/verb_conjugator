@@ -21,3 +21,8 @@
 .conjugation {
 	font-size: 18px;
 }
+
+.search-error {
+	padding-top: 20px;
+	color: red;
+}

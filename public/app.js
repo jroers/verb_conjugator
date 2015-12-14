@@ -23,6 +23,11 @@ $(document).ready(function() {
 						$(".search-error").html("Dommage ! Il me semble que ce verbe n'existe pas.<br />Oops! Looks like this verb doesn't exist yet.");
 						$("#verbs").empty();
 					}
+				},
+				error: function (error) {
+					console.log("search error: ", error);
+					$("#verbs").empty();
+					$(".search-error").html("Search currently unavailable.");
 				}
 			});
 		}
@@ -45,9 +50,12 @@ $(document).ready(function() {
 				$(".nous").text(data.tense.present.nous);
 				$(".vous").text(data.tense.present.vous);
 				$(".ils").text(data.tense.present.ils);
-				$(".imparfait").removeClass("btn-success");
-				$(".imparfait").addClass("btn-primary");
+				$(".tense").removeClass("btn-success");
+				$(".tense").addClass("btn-primary");
 				$(".present").addClass("btn-success");
+			},
+			error: function (error) {
+				console.log("Present tense error: ", error);
 			}
 		});
 	});
@@ -69,9 +77,12 @@ $(document).ready(function() {
 				$(".nous").text(data.tense.imparfait.nous);
 				$(".vous").text(data.tense.imparfait.vous);
 				$(".ils").text(data.tense.imparfait.ils);
-				$(".present").removeClass("btn-success");
-				$(".present").addClass("btn-primary");
+				$(".tense").removeClass("btn-success");
+				$(".tense").addClass("btn-primary");
 				$(".imparfait").addClass("btn-success");
+			},
+			error: function (error) {
+				console.log("Imparfait tense error: ", error);
 			}
 		});
 	});
@@ -113,15 +124,20 @@ function renderConjugation(verb) {
 	'		          </div>' +
 	'		          <div class="col-md-3 button-sidebar">' +
 	'					<p>' +
-	'		              <button class="btn btn-danger correction">Mistake?</button>' +
+	'		              <button class="btn btn-danger edit-tense">Mistake?</button>' +
+	'		            </p>' +
+						// This button starts out as hidden and will be unhidden on click of the Mistake? button.
+	'					<p>' +
+	'		              <button class="btn btn-success edit-tense save">Save Changes</button>' +
 	'		            </p>' +
 	'		            <p>' +
-	'		              <button class="btn btn-success present">Present</button>' +
+	'		              <button class="btn btn-success tense present">Present</button>' +
 	'		            </p>' +
 	'		            <p>' +
-	'		              <button class="btn btn-primary imparfait">Imparfait</button>' +
+	'		              <button class="btn btn-primary tense imparfait">Imparfait</button>' +
 	'		            </p>' +
 	'		          </div>' +
 	'		        </div>';
 	$("#verbs").html(conjugationGridHtml);
+	$(".edit-tense.save").hide();
 }
