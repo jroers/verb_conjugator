@@ -92,6 +92,32 @@ $(document).ready(function() {
 			}
 		});
 	});
+
+	$("#verbs").on('click', '.edit-tense.edit', function (event) {
+		$(".edit-tense.save").show();
+		$(".edit-tense.edit").hide();
+		var je = $(".je").text();
+		var tu = $(".tu").text();
+		var il = $(".il").text();
+		var nous = $(".nous").text();
+		var vous = $(".vous").text();
+		var ils = $(".ils").text();
+		$(".je").html("<input type='text' class='je'>");
+		$("input.je").val(je);
+		$(".tu").html("<input type='text' class='tu'>");
+		$("input.tu").val(tu);
+		$(".il").html("<input type='text' class='il'>");
+		$("input.il").val(il);
+		$(".nous").html("<input type='text' class='nous'>");
+		$("input.nous").val(nous);
+		$(".vous").html("<input type='text' class='vous'>");
+		$("input.vous").val(vous);
+		$(".ils").html("<input type='text' class='ils'>");
+		$("input.ils").val(ils);
+
+		//After changing the contents, use this: $("span.nous").html($("input.nous").val());
+		// That will take the value of the text box and put it into the span in lieu of an input box.
+	});
 });
 
 var tense;
@@ -130,7 +156,7 @@ function renderConjugation(verb) {
 	'		          </div>' +
 	'		          <div class="col-md-3 button-sidebar">' +
 	'					<p>' +
-	'		              <button class="btn btn-danger edit-tense">Mistake?</button>' +
+	'		              <button class="btn btn-danger edit-tense edit">Mistake?</button>' +
 	'		            </p>' +
 						// This button starts out as hidden and will be unhidden on click of the Mistake? button.
 	'					<p>' +
