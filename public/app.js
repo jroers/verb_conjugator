@@ -3,36 +3,81 @@ $(document).ready(function() {
 
 	var url;
 	var dataToUse = {};
+	var id;
 
 	$("input").keydown(function handler(event) {
 		if (event.which === 13) {
-			console.log("Hey there");
-			// var infinitive = $(this).val().toLowerCase();
-			// url = "/api/verbs/" + infinitive;
-			// $.ajax({
-			// 	method: "GET",
-			// 	url: url,
-			// 	success: function (data) {
-			// 		console.log(data);
-			// 		// je = data.tense.present.je;
-			// 		// tu = data.tense.present.tu;
-			// 		// il = data.tense.present.il;
-			// 		// nous = data.tense.present.nous;
-			// 		// vous = data.tense.present.vous;
-			// 		// ils = data.tense.present.ils;
-			// 		// $(".conjugation.je").text(je);
-			// 		// $(".conjugation.tu").text(tu);
-			// 		// $(".conjugation.il").text(il);
-			// 		// $(".conjugation.nous").text(nous);
-			// 		// $(".conjugation.vous").text(vous);
-			// 		// $(".conjugation.ils").text(ils);
-			// 		renderConjugation(data);
-			// 	}
-			// });
+			// console.log("Hey there");
+			var infinitive = $(this).val().toLowerCase();
+			var url = "/api/verbname/" + infinitive;
+			$.ajax({
+				method: "GET",
+				url: url,
+				success: function (data) {
+					//Checks that there is actually information to work with
+					if (data.length > 0) {
+						$(".search-error").empty();
+						renderConjugation(data[0]);
+						tense = "present";
+					} else {
+						$(".search-error").html("Dommage ! Il me semble que ce verbe n'existe pas.<br />Oops! Looks like this verb doesn't exist yet.");
+						$("#verbs").empty();
+					}
+				}
+			});
 		}
-		
+	});
+
+	$("#verbs").on('click', '.present', function (event) {
+		console.log("Back to the present");
+		id = $(".row.verb-conjugation").attr('id');
+		// console.log(id);
+		$.ajax({
+			method: "GET",
+			data: {_id: id},
+			url: "/api/verbid/" + id,
+			success: function (data) {
+				// console.log(data);
+				tense = "present";
+				$(".je").text(data.tense.present.je);
+				$(".tu").text(data.tense.present.tu);
+				$(".il").text(data.tense.present.il);
+				$(".nous").text(data.tense.present.nous);
+				$(".vous").text(data.tense.present.vous);
+				$(".ils").text(data.tense.present.ils);
+				$(".imparfait").removeClass("btn-success");
+				$(".imparfait").addClass("btn-primary");
+				$(".present").addClass("btn-success");
+			}
+		});
+	});
+
+	$("#verbs").on('click', '.imparfait', function (event) {
+		console.log("Switching to Imparfait");
+		id = $(".row.verb-conjugation").attr('id');
+		// console.log(id);
+		$.ajax({
+			method: "GET",
+			data: {_id: id},
+			url: "/api/verbid/" + id,
+			success: function (data) {
+				// console.log(data);
+				tense = "imparfait";
+				$(".je").text(data.tense.imparfait.je);
+				$(".tu").text(data.tense.imparfait.tu);
+				$(".il").text(data.tense.imparfait.il);
+				$(".nous").text(data.tense.imparfait.nous);
+				$(".vous").text(data.tense.imparfait.vous);
+				$(".ils").text(data.tense.imparfait.ils);
+				$(".present").removeClass("btn-success");
+				$(".present").addClass("btn-primary");
+				$(".imparfait").addClass("btn-success");
+			}
+		});
 	});
 });
+
+var tense;
 
 function renderConjugation(verb) {
 	if ($(".verb-conjugation")) {
@@ -67,11 +112,14 @@ function renderConjugation(verb) {
 	'		            </div>' +
 	'		          </div>' +
 	'		          <div class="col-md-3 button-sidebar">' +
-	'		            <p>' +
-	'		              <button class="btn btn-danger">Present</button>' +
+	'					<p>' +
+	'		              <button class="btn btn-danger correction">Mistake?</button>' +
 	'		            </p>' +
 	'		            <p>' +
-	'		              <button class="btn btn-danger">Imparfait</button>' +
+	'		              <button class="btn btn-success present">Present</button>' +
+	'		            </p>' +
+	'		            <p>' +
+	'		              <button class="btn btn-primary imparfait">Imparfait</button>' +
 	'		            </p>' +
 	'		          </div>' +
 	'		        </div>';

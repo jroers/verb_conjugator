@@ -11,7 +11,7 @@ When each button is clicked, the database will display the present-tense conjuga
 #Sprint 2:
 Change the buttons for an input field.
 
-Whatever the user inputs will be checked against the database. If the verb exists, it will display the present tense conjugation on the screen. If it doesn't exist, default text "Sorry, verb not found." will display on the screen.
+Whatever the user inputs will be checked against the database. If the verb exists, it will display the present tense conjugation on the screen. If it doesn't exist, default "not found" text will display on the screen.
 
 Each verb should display with buttons for each tense: Present and Imparfait.
 

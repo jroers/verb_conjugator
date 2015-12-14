@@ -39,8 +39,20 @@ app.get('/api/verbs', function verbList (req, res) {
 	});
 });
 
-app.get('/api/verbs/:infinitive', function verbList (req, res) {
-	db.Verb.findOne(req.params, function (err, success) {
+
+// searching by infinitive
+app.get('/api/verbname/:infinitive', function verbList (req, res) {
+	// console.log(req.params);
+	db.Verb.find(req.params, function (err, success) {
+		if (err) { return console.log(err); }
+		res.send(success);
+	});
+});
+
+//searching by infinitive ID
+app.get('/api/verbid/:_id', function verbList (req, res) {
+	// console.log(req.params);
+	db.Verb.findById(req.params, function (err, success) {
 		if (err) { return console.log(err); }
 		res.send(success);
 	});
