@@ -118,6 +118,37 @@ $(document).ready(function() {
 		//After changing the contents, use this: $("span.nous").html($("input.nous").val());
 		// That will take the value of the text box and put it into the span in lieu of an input box.
 	});
+
+	$("#verbs").on('click', '.edit-tense.save', function (event) {
+		$(".edit-tense.edit").show();
+		$(".edit-tense.save").hide();
+		id = $(".row.verb-conjugation").attr('id');
+		var je = $("input.je").val();
+		var tu = $("input.tu").val();
+		var il = $("input.il").val();
+		var nous = $("input.nous").val();
+		var vous = $("input.vous").val();
+		var ils = $("input.ils").val();
+		dataToUse.tense = tense;
+		dataToUse.je = je;
+		dataToUse.tu = tu;
+		dataToUse.il = il;
+		dataToUse.nous = nous;
+		dataToUse.vous = vous;
+		dataToUse.ils = ils;
+		$.ajax({
+			method: "PUT",
+			url: "/api/verbid/" + id,
+			data: dataToUse,
+			success: function (data) {
+				console.log(data);
+			},
+			error: function (error) {
+				console.log(error);
+			}
+
+		});
+	});
 });
 
 var tense;

@@ -27,3 +27,8 @@
 	padding-top: 20px;
 	color: red;
 }
+
+span input {
+	text-align: center;
+	margin-bottom: 5px;
+}
