@@ -153,8 +153,34 @@ $(document).ready(function() {
 
 	$(".search-error").on('click', 'button.new-verb', function (event) {
 		console.log("new verb click");
-		$(".modal-title .new-infinitive").text($("input.verb-search").val().toLowerCase());
+		var infinitive = $("input.verb-search").val().toLowerCase();
+		var family = infinitive.slice(infinitive.length-2, infinitive.length);
+		var stem = infinitive.slice(0, infinitive.length-2);
+		$(".modal-title .new-infinitive").text(infinitive);
+		$(".irregular-flag").prop('checked', false);
 		$("#newVerbModal").modal("show");
+		if (family === "er") {
+			$(".new-verb.je").val(stem + "e");
+			$(".new-verb.tu").val(stem + "es");
+			$(".new-verb.il").val(stem + "e");
+			$(".new-verb.nous").val(stem + "ons");
+			$(".new-verb.vous").val(stem + "ez");
+			$(".new-verb.ils").val(stem + "ent");
+		} else if (family === "re") {
+			$(".new-verb.je").val(stem + "s");
+			$(".new-verb.tu").val(stem + "s");
+			$(".new-verb.il").val(stem);
+			$(".new-verb.nous").val(stem + "ons");
+			$(".new-verb.vous").val(stem + "ez");
+			$(".new-verb.ils").val(stem + "ent");
+		} else if (family === "ir") {
+			$(".new-verb.je").val(stem + "is");
+			$(".new-verb.tu").val(stem + "is");
+			$(".new-verb.il").val(stem + "it");
+			$(".new-verb.nous").val(stem + "issons");
+			$(".new-verb.vous").val(stem + "issez");
+			$(".new-verb.ils").val(stem + "issent");
+		}
 	});
 });
 

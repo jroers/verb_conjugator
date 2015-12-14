@@ -16,3 +16,10 @@ Whatever the user inputs will be checked against the database. If the verb exist
 Each verb should display with buttons for each tense: Present and Imparfait.
 
 When each button is clicked, the text in the conjugation grid will update to the apropriate information.
+
+#Sprint 3:
+Added edit buttons that change the conjugations into text boxes. The text boxes pull the initial information from its respective cell of the conjugation grid. This allows the user to make changes to all necessary subjects in this tense prior to saving.
+
+Searching for a verb that has a valid infinitive structure (ends in "ir", "er" or "re") presents a button to create a new verb from the typed infinitive.
+
+Clicking the "Create?" button opens up a Create Verb modal that will populate with manipulations of the typed infinitive.
