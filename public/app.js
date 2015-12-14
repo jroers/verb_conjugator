@@ -9,27 +9,33 @@ $(document).ready(function() {
 		if (event.which === 13) {
 			// console.log("Hey there");
 			var infinitive = $(this).val().toLowerCase();
-			var url = "/api/verbname/" + infinitive;
-			$.ajax({
-				method: "GET",
-				url: url,
-				success: function (data) {
-					//Checks that there is actually information to work with
-					if (data.length > 0) {
-						$(".search-error").empty();
-						renderConjugation(data[0]);
-						tense = "present";
-					} else {
-						$(".search-error").html("Dommage ! Il me semble que ce verbe n'existe pas.<br />Oops! Looks like this verb doesn't exist yet.");
+			var family = infinitive.slice(infinitive.length-2, infinitive.length);
+			if (family === "er" || family === "re" || family === "ir") {
+				var url = "/api/verbname/" + infinitive;
+				$.ajax({
+					method: "GET",
+					url: url,
+					success: function (data) {
+						//Checks that there is actually information to work with
+						if (data.length > 0) {
+							$(".search-error").empty();
+							renderConjugation(data[0]);
+							tense = "present";
+						} else {
+							$(".search-error").html("Dommage ! Il me semble que ce verbe n'existe pas.<br />Oops! Looks like this verb doesn't exist yet.");
+							$("#verbs").empty();
+						}
+					},
+					error: function (error) {
+						console.log("search error: ", error);
 						$("#verbs").empty();
+						$(".search-error").html("Search currently unavailable.");
 					}
-				},
-				error: function (error) {
-					console.log("search error: ", error);
-					$("#verbs").empty();
-					$(".search-error").html("Search currently unavailable.");
-				}
-			});
+				});
+			} else {
+				$("#verbs").empty();
+				$(".search-error").html("Euh, je ne crois pas que ce soit un verbe.<br />Please type a valid infinitive.");
+			}
 		}
 	});
 
