@@ -28,6 +28,10 @@
 	color: red;
 }
 
+.search-error button {
+	margin-top: 10px;
+}
+
 span input {
 	text-align: center;
 	margin-bottom: 5px;

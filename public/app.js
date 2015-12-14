@@ -5,7 +5,7 @@ $(document).ready(function() {
 	var dataToUse = {};
 	var id;
 
-	$("input").keydown(function handler(event) {
+	$("input.verb-search").keydown(function handler(event) {
 		if (event.which === 13) {
 			// console.log("Hey there");
 			var infinitive = $(this).val().toLowerCase();
@@ -22,7 +22,9 @@ $(document).ready(function() {
 							renderConjugation(data[0]);
 							tense = "present";
 						} else {
-							$(".search-error").html("Dommage ! Il me semble que ce verbe n'existe pas.<br />Oops! Looks like this verb doesn't exist yet.");
+							$(".search-error").html("Dommage ! Il me semble que ce verbe n'existe pas.<br />" +
+								"Oops! Looks like this verb doesn't exist yet.<br />" +
+								"<button class='btn btn-primary new-verb'>Create?</button>");
 							$("#verbs").empty();
 						}
 					},
@@ -40,7 +42,6 @@ $(document).ready(function() {
 	});
 
 	$("#verbs").on('click', '.present', function (event) {
-		console.log("Back to the present");
 		id = $(".row.verb-conjugation").attr('id');
 		// console.log(id);
 		$.ajax({
@@ -67,7 +68,6 @@ $(document).ready(function() {
 	});
 
 	$("#verbs").on('click', '.imparfait', function (event) {
-		console.log("Switching to Imparfait");
 		id = $(".row.verb-conjugation").attr('id');
 		// console.log(id);
 		$.ajax({
@@ -114,9 +114,6 @@ $(document).ready(function() {
 		$("input.vous").val(vous);
 		$(".ils").html("<input type='text' class='ils'>");
 		$("input.ils").val(ils);
-
-		//After changing the contents, use this: $("span.nous").html($("input.nous").val());
-		// That will take the value of the text box and put it into the span in lieu of an input box.
 	});
 
 	$("#verbs").on('click', '.edit-tense.save', function (event) {
@@ -141,13 +138,23 @@ $(document).ready(function() {
 			url: "/api/verbid/" + id,
 			data: dataToUse,
 			success: function (data) {
-				console.log(data);
+				$("span.je").html(je);
+				$("span.tu").html(tu);
+				$("span.il").html(il);
+				$("span.nous").html(nous);
+				$("span.vous").html(vous);
+				$("span.ils").html(ils);
 			},
 			error: function (error) {
 				console.log(error);
 			}
-
 		});
+	});
+
+	$(".search-error").on('click', 'button.new-verb', function (event) {
+		console.log("new verb click");
+		$(".modal-title .new-infinitive").text($("input.verb-search").val().toLowerCase());
+		$("#newVerbModal").modal("show");
 	});
 });
 

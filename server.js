@@ -58,6 +58,25 @@ app.get('/api/verbid/:_id', function verbList (req, res) {
 	});
 });
 
+app.put('/api/verbid/:_id', function updateVerb (req, res) {
+	console.log(req.body);
+	db.Verb.findById(req.params, function (err, success) {
+		if (err) { return console.log(err); }
+		var selectedTense = req.body.tense;
+		var updatedVerb = success;
+		//Checks to see whether anything has actually been changed. If there is a difference, it will save it.
+		if (updatedVerb.tense[selectedTense].je !== req.body.je) { updatedVerb.tense[selectedTense].je = req.body.je; }
+		if (updatedVerb.tense[selectedTense].tu !== req.body.tu) { updatedVerb.tense[selectedTense].tu = req.body.tu; }
+		if (updatedVerb.tense[selectedTense].il !== req.body.il) { updatedVerb.tense[selectedTense].il = req.body.il; }
+		if (updatedVerb.tense[selectedTense].nous !== req.body.nous) { updatedVerb.tense[selectedTense].nous = req.body.nous; }
+		if (updatedVerb.tense[selectedTense].vous !== req.body.vous) { updatedVerb.tense[selectedTense].vous = req.body.vous; }
+		if (updatedVerb.tense[selectedTense].ils !== req.body.ils) { updatedVerb.tense[selectedTense].ils = req.body.ils; }
+		updatedVerb.save(function (err, savedVerb) {
+			res.send(updatedVerb);
+		});
+	});
+});
+
  // listen on port 3000
 app.listen(process.env.PORT || 3000, function () {
   console.log('Express server is running on http://localhost:3000/');
