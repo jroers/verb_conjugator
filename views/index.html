@@ -59,49 +59,58 @@
           </div>
           <div class="modal-body">
             <div class="row">
-              <form class='form-horizontal'>
+              <div class="col-md-12 notice">
+                <h3>NOTE: These conjugations assume regularity. If it is irregular, please check the "irregular" box and update accordingly.</h3>
+              </div>
+            </div>
+            <div class="row">
                 
-                <div class="row new-verb">
-                  <div class="col-md-9">
-                    <div class="col-md-6 center bottom">
-                      <h1>Je</h1>
-                      <input class="new-verb je">
-                    </div>
-                    <div class="col-md-6 bottom">
-                      <h1>Nous</h1>
-                      <input class="new-verb nous">
-                    </div>
-                    <div class="col-md-6 center bottom">
-                      <h1>Tu</h1>
-                      <input class="new-verb tu">
-                    </div>
-                    <div class="col-md-6 bottom">
-                      <h1>Vous</h1>
-                      <input class="new-verb vous">
-                   </div>
-                    <div class="col-md-6 center">
-                      <h1>Il/Elle/On</h1>
-                      <input class="new-verb il">
-                    </div>
-                    <div class="col-md-6">
-                      <h1>Ils/Elles</h1>
-                      <input class="new-verb ils">
-                    </div>
+              <div class="row new-verb">
+                <div class="col-md-9">
+                  <div class="col-md-6 center bottom">
+                    <h1>Je</h1>
+                    <span class="new-verb je"><input class="new-verb je"></span>
                   </div>
-                  <div class="col-md-3 button-sidebar">
-                    <p>
-                      Irregular? <input class="irregular-flag" type="checkbox">
-                    </p>
-                    <p>
-                      <button class="btn btn-success tense present">Present</button>
-                    </p>
-                    <p>
-                      <button class="btn btn-primary tense imparfait">Imparfait</button>
-                    </p>
+                  <div class="col-md-6 bottom">
+                    <h1>Nous</h1>
+                    <span class="new-verb nous"><input class="new-verb nous"></span>
+                  </div>
+                  <div class="col-md-6 center bottom">
+                    <h1>Tu</h1>
+                    <span class="new-verb tu"><input class="new-verb tu"></span>
+                  </div>
+                  <div class="col-md-6 bottom">
+                    <h1>Vous</h1>
+                    <span class="new-verb vous"><input class="new-verb vous"></span>
+                 </div>
+                  <div class="col-md-6 center">
+                    <h1>Il/Elle/On</h1>
+                    <span class="new-verb il"><input class="new-verb il"></span>
+                  </div>
+                  <div class="col-md-6">
+                    <h1>Ils/Elles</h1>
+                    <span class="new-verb ils"><input class="new-verb ils"></span>
                   </div>
                 </div>
+                <div class="col-md-3 button-sidebar">
+                  <p>
+                    Irregular? <input class="irregular-flag" type="checkbox">
+                  </p>
+                  <p>
+                    <button class="btn btn-success save-tense">Save</button>
+                  </p>
+                  <p>
+                    <button class="btn btn-primary next-tense">Next</button>
+                  </p>
+                  <p>
+                    <button class="btn btn-primary previous-tense">Previous</button>
+                  </p>
+                  <p>
+                    Current tense: <span class="tense-progress">1</span>/2
+                  </p>
+                </div>
+              </div>
 
-              </form>
             </div>
           </div>
           <div class="modal-footer">

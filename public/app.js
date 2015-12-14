@@ -1,9 +1,17 @@
+//GLOBAL VARIABLES
+//Functions are at the bottom.
+
+var tense;
+var url;
+var dataToUse = {};
+var id;
+var tenseCount = 0;
+
+//update this variable with the maxiumum number of tenses stored.
+var tenseMax = 2;
+
 $(document).ready(function() {
 	console.log("sanity check. JS is working");
-
-	var url;
-	var dataToUse = {};
-	var id;
 
 	$("input.verb-search").keydown(function handler(event) {
 		if (event.which === 13) {
@@ -152,39 +160,87 @@ $(document).ready(function() {
 	});
 
 	$(".search-error").on('click', 'button.new-verb', function (event) {
-		console.log("new verb click");
+		tense = "present";
+		$("span.new-verb.je").html("<input class='new-verb je'>");
+		$("span.new-verb.tu").html("<input class='new-verb tu'>");
+		$("span.new-verb.il").html("<input class='new-verb il'>");
+		$("span.new-verb.nous").html("<input class='new-verb nous'>");
+		$("span.new-verb.vous").html("<input class='new-verb vous'>");
+		$("span.new-verb.ils").html("<input class='new-verb ils'>");
+		tenseCount = 1;
 		var infinitive = $("input.verb-search").val().toLowerCase();
 		var family = infinitive.slice(infinitive.length-2, infinitive.length);
 		var stem = infinitive.slice(0, infinitive.length-2);
+
+		dataToUse.infinitive = infinitive;
+		dataToUse.family = family;
+		dataToUse.tense = {};
+
 		$(".modal-title .new-infinitive").text(infinitive);
 		$(".irregular-flag").prop('checked', false);
+
+		//hiding buttons that are currently unnecessary
+		$(".save-tense").show();
+		$(".previous-tense").hide();
+		$(".next-tense").hide();
+		$("#createVerb").hide();
 		$("#newVerbModal").modal("show");
-		if (family === "er") {
-			$(".new-verb.je").val(stem + "e");
-			$(".new-verb.tu").val(stem + "es");
-			$(".new-verb.il").val(stem + "e");
-			$(".new-verb.nous").val(stem + "ons");
-			$(".new-verb.vous").val(stem + "ez");
-			$(".new-verb.ils").val(stem + "ent");
-		} else if (family === "re") {
-			$(".new-verb.je").val(stem + "s");
-			$(".new-verb.tu").val(stem + "s");
-			$(".new-verb.il").val(stem);
-			$(".new-verb.nous").val(stem + "ons");
-			$(".new-verb.vous").val(stem + "ez");
-			$(".new-verb.ils").val(stem + "ent");
-		} else if (family === "ir") {
-			$(".new-verb.je").val(stem + "is");
-			$(".new-verb.tu").val(stem + "is");
-			$(".new-verb.il").val(stem + "it");
-			$(".new-verb.nous").val(stem + "issons");
-			$(".new-verb.vous").val(stem + "issez");
-			$(".new-verb.ils").val(stem + "issent");
+		//Applies the appropriate logic to verbs depending on their family.
+		conjugateVerb(infinitive, tenseChecker(tenseCount));
+	});
+
+	$(".save-tense").click(function (event) {
+		//hides the save button and displays appropriate buttons to cycle between tense editors.
+		$(".save-tense").hide();
+		if (tenseCount > 1 ) {
+			$(".previous-tense").show();
+			if (tenseCount < tenseMax) {
+				$(".next-tense").show();
+			}
+		} else if (tenseCount === 1) {
+			$(".next-tense").show();
 		}
+		tenseChecker(tenseCount);
+
+		var je = $("input.new-verb.je").val();
+		var tu = $("input.new-verb.tu").val();
+		var il = $("input.new-verb.il").val();
+		var nous = $("input.new-verb.nous").val();
+		var vous = $("input.new-verb.vous").val();
+		var ils = $("input.new-verb.ils").val();
+		dataToUse.tense[tense] = {};
+		dataToUse.tense[tense].je = je;
+		dataToUse.tense[tense].tu = tu;
+		dataToUse.tense[tense].il = il;
+		dataToUse.tense[tense].nous = nous;
+		dataToUse.tense[tense].vous = vous;
+		dataToUse.tense[tense].ils = ils;
+		dataToUse.tense[tense].irregular = $(".irregular-flag").prop('checked');
+		console.log(dataToUse);
+		$("span.new-verb.je").html(je);
+		$("span.new-verb.tu").html(tu);
+		$("span.new-verb.il").html(il);
+		$("span.new-verb.nous").html(nous);
+		$("span.new-verb.vous").html(vous);
+		$("span.new-verb.ils").html(ils);
+	});
+	
+	$(".next-tense").click(function (event) {
+		$(".save-tense").show();
+		$(".previous-tense").hide();
+		$(".next-tense").hide();
+		$("span.new-verb.je").html("<input class='new-verb je'>");
+		$("span.new-verb.tu").html("<input class='new-verb tu'>");
+		$("span.new-verb.il").html("<input class='new-verb il'>");
+		$("span.new-verb.nous").html("<input class='new-verb nous'>");
+		$("span.new-verb.vous").html("<input class='new-verb vous'>");
+		$("span.new-verb.ils").html("<input class='new-verb ils'>");
+		tenseCount ++;
+		$(".tense-progress").text(tenseCount);
+		var infinitive = $(".new-infinitive").text();
+		conjugateVerb(infinitive, tenseChecker(tenseCount));
 	});
 });
-
-var tense;
 
 function renderConjugation(verb) {
 	if ($(".verb-conjugation")) {
@@ -236,4 +292,79 @@ function renderConjugation(verb) {
 	'		        </div>';
 	$("#verbs").html(conjugationGridHtml);
 	$(".edit-tense.save").hide();
+}
+
+//This function will be used in the POST for new verbs.
+//It will store information for the appropriate tense in the appropriate category.
+function tenseChecker(tenseCount) {
+	if (tenseCount === 1) {
+		tense = "present";
+		return tense;
+	} else if (tenseCount === 2) {
+		tense = "imparfait";
+		return tense;
+	}
+}
+
+//This function will need to be updated as more tenses are added.
+function conjugateVerb(infinitive, tense) {
+	var family = infinitive.slice(infinitive.length-2, infinitive.length);
+	var stem = infinitive.slice(0, infinitive.length-2);
+	if (tense === "present") {
+		if (family === "er") {
+			$("input.new-verb.je").val(stem + "e");
+			$("input.new-verb.tu").val(stem + "es");
+			$("input.new-verb.il").val(stem + "e");
+			$("input.new-verb.nous").val(stem + "ons");
+			$("input.new-verb.vous").val(stem + "ez");
+			$("input.new-verb.ils").val(stem + "ent");
+		} else if (family === "re") {
+			$("input.new-verb.je").val(stem + "s");
+			$("input.new-verb.tu").val(stem + "s");
+			$("input.new-verb.il").val(stem);
+			$("input.new-verb.nous").val(stem + "ons");
+			$("input.new-verb.vous").val(stem + "ez");
+			$("input.new-verb.ils").val(stem + "ent");
+		} else if (family === "ir") {
+			$("input.new-verb.je").val(stem + "is");
+			$("input.new-verb.tu").val(stem + "is");
+			$("input.new-verb.il").val(stem + "it");
+			$("input.new-verb.nous").val(stem + "issons");
+			$("input.new-verb.vous").val(stem + "issez");
+			$("input.new-verb.ils").val(stem + "issent");
+		}
+	} else if (tense === "imparfait") {
+		if (infinitive === "être" || infinitive === "etre") {
+			$("input.new-verb.je").val("étais");
+			$("input.new-verb.tu").val("étais");
+			$("input.new-verb.il").val("était");
+			$("input.new-verb.nous").val("étions");
+			$("input.new-verb.vous").val("étiez");
+			$("input.new-verb.ils").val("étaient");
+			$(".irregular-flag").prop('checked', true);
+		} else {
+			if (family === "er") {
+				$("input.new-verb.je").val(stem + "ais");
+				$("input.new-verb.tu").val(stem + "ais");
+				$("input.new-verb.il").val(stem + "ait");
+				$("input.new-verb.nous").val(stem + "ions");
+				$("input.new-verb.vous").val(stem + "iez");
+				$("input.new-verb.ils").val(stem + "aient");
+			} else if (family === "re") {
+				$("input.new-verb.je").val(stem + "ais");
+				$("input.new-verb.tu").val(stem + "ais");
+				$("input.new-verb.il").val(stem + "ait");
+				$("input.new-verb.nous").val(stem + "ions");
+				$("input.new-verb.vous").val(stem + "iez");
+				$("input.new-verb.ils").val(stem + "aient");
+			} else if (family === "ir") {
+				$("input.new-verb.je").val(stem + "issais");
+				$("input.new-verb.tu").val(stem + "issais");
+				$("input.new-verb.il").val(stem + "issait");
+				$("input.new-verb.nous").val(stem + "issions");
+				$("input.new-verb.vous").val(stem + "issiez");
+				$("input.new-verb.ils").val(stem + "issaient");
+			}
+		}
+	}
 }

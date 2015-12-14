@@ -36,3 +36,11 @@ span input {
 	text-align: center;
 	margin-bottom: 5px;
 }
+
+.notice {
+	color: red;
+}
+
+.new-verb {
+	text-align: center;
+}
