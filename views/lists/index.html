@@ -27,14 +27,52 @@
 
     <section class="container">
       <div class="row">
-        <div class="col-md-10 col-md-offset-1">
-          <h1>UNDER CONSTRUCTION</h1>
+        <div class="col-md-6 col-md-offset-3">
+          <form id="newList">
+            <fieldset>
+              <!-- Form Name -->
+              <legend>New Verb List:</legend>
+
+              <!-- Text input-->
+              <div class="form-group">
+                <label class="col-md-4 control-label" for="name">Name:</label>
+                <div class="col-md-8">
+                <input id="name" name="name" type="text" placeholder="What would you like to call this list?" class="form-control input-md" required="">
+
+                </div>
+              </div>
+
+              <!-- Textarea -->
+              <div class="form-group">
+                <label class="col-md-4 control-label" for="newDescription">Description of contents</label>
+                <div class="col-md-8">
+                  <textarea class="form-control" id="newDescription" name="genres"></textarea>
+                </div>
+              </div>
+
+              <!-- Dropdown menu -->
+              <label class="col-md-4 control-label" for="verbs">Verbs</label>
+              <select class="col-md-8" id="verbs">
+                <option value="566b4f2ffeab6fd863ee76c5">aimer</option>
+                <option value="566b4f2ffeab6fd863ee76c2">faire</option>
+                <option value="566b4f2ffeab6fd863ee76bf">avoir</option>
+              </select>
+
+              <!-- Button -->
+              <div class="form-group">
+         <!-- <label class="col-md-4 control-label" for="singlebutton">Create</label> -->
+                <div class="col-md-2 col-md-offset-5">
+                  <button id="singlebutton" name="singlebutton" class="btn btn-primary">Create</button>
+                </div>
+              </div>
+            </fieldset>
+          </form>
         </div>
       </div>
 
       <!-- verb stuff! -->
       <div id='lists'>
-        
+        <h1>LISTS WILL GO HERE</h1>
       </div>
     </section>
 

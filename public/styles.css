@@ -44,3 +44,15 @@ span input {
 .new-verb {
 	text-align: center;
 }
+
+#newList label {
+	text-align: right;
+}
+
+#newList legend {
+	text-align: center;
+}
+
+#lists {
+	text-align: center;
+}
