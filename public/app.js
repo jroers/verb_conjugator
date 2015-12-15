@@ -36,14 +36,17 @@ $.ajax({
 			if (element.family === "er" && element.tense.present.irregular === false) {
 				console.log(element.infinitive);
 				dataToUse._id = element._id;
+				dataToUse.infinitive = element.infinitive;
 				dataToUse.tense = "present";
 				erList.verbs.push(dataToUse);
 			} else if (element.family === "ir" && element.tense.present.irregular === false) {
 				dataToUse._id = element._id;
+				dataToUse.infinitive = element.infinitive;
 				dataToUse.tense = "present";
 				irList.verbs.push(dataToUse);
 			} else if (element.family === "re" && element.tense.present.irregular === false) {
 				dataToUse._id = element._id;
+				dataToUse.infinitive = element.infinitive;
 				dataToUse.tense = "present";
 				reList.verbs.push(dataToUse);
 			}
