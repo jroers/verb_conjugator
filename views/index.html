@@ -60,7 +60,8 @@
           <div class="modal-body">
             <div class="row">
               <div class="col-md-12 notice">
-                <h3>NOTE: These conjugations assume regularity. If it is irregular, please check the "irregular" box and update accordingly.</h3>
+                <h3>Current tense: <span class="current-tense"></span></h3>
+                <p>NOTE: These conjugations assume regularity. If it is irregular, please check the "irregular" box and update accordingly.</p>
               </div>
             </div>
             <div class="row">
@@ -69,7 +70,7 @@
                 <div class="col-md-9">
                   <div class="col-md-6 center bottom">
                     <h1>Je</h1>
-                    <span class="new-verb je"><input class="new-verb je"></span>
+                    <span class="new-verb je"></span>
                   </div>
                   <div class="col-md-6 bottom">
                     <h1>Nous</h1>
@@ -102,11 +103,13 @@
                   <p>
                     <button class="btn btn-primary next-tense">Next</button>
                   </p>
-                  <p>
+<!--                   <p>
                     <button class="btn btn-primary previous-tense">Previous</button>
-                  </p>
+                  </p> -->
                   <p>
-                    Current tense: <span class="tense-progress">1</span>/2
+                    Current tense:
+                    <br>
+                    <span class="tense-progress">1</span> of 2
                   </p>
                 </div>
               </div>
@@ -114,9 +117,8 @@
             </div>
           </div>
           <div class="modal-footer">
+            <button type="button" class="btn btn-success" id="createVerb">Save</button>
             <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-            <!-- Consider deleting/hiding this button and adding/showing it upon data entry. -->
-            <button type="button" class="btn btn-info" id="createVerb">Save</button>
           </div>
         </div><!-- /.modal-content -->
       </div><!-- /.modal-dialog -->

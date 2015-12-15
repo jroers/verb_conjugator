@@ -39,6 +39,13 @@ app.get('/api/verbs', function verbList (req, res) {
 	});
 });
 
+app.post('/api/verbs', function newVerb (req, res) {
+	db.Verb.create(req.body, function (err, success) {
+		if (err) { return console.log(err); }
+		res.send(success);
+	});
+});
+
 
 // searching by infinitive
 app.get('/api/verbname/:infinitive', function verbList (req, res) {

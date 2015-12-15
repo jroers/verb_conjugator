@@ -168,6 +168,7 @@ $(document).ready(function() {
 		$("span.new-verb.vous").html("<input class='new-verb vous'>");
 		$("span.new-verb.ils").html("<input class='new-verb ils'>");
 		tenseCount = 1;
+		tenseChecker(tenseCount);
 		var infinitive = $("input.verb-search").val().toLowerCase();
 		var family = infinitive.slice(infinitive.length-2, infinitive.length);
 		var stem = infinitive.slice(0, infinitive.length-2);
@@ -181,7 +182,6 @@ $(document).ready(function() {
 
 		//hiding buttons that are currently unnecessary
 		$(".save-tense").show();
-		$(".previous-tense").hide();
 		$(".next-tense").hide();
 		$("#createVerb").hide();
 		$("#newVerbModal").modal("show");
@@ -192,15 +192,11 @@ $(document).ready(function() {
 	$(".save-tense").click(function (event) {
 		//hides the save button and displays appropriate buttons to cycle between tense editors.
 		$(".save-tense").hide();
-		if (tenseCount > 1 ) {
-			$(".previous-tense").show();
-			if (tenseCount < tenseMax) {
-				$(".next-tense").show();
-			}
-		} else if (tenseCount === 1) {
-			$(".next-tense").show();
-		}
+		newVerbButtonCheck(tenseCount);
 		tenseChecker(tenseCount);
+		if (tenseCount === tenseMax) {
+			$("#createVerb").show();
+		}
 
 		var je = $("input.new-verb.je").val();
 		var tu = $("input.new-verb.tu").val();
@@ -216,7 +212,7 @@ $(document).ready(function() {
 		dataToUse.tense[tense].vous = vous;
 		dataToUse.tense[tense].ils = ils;
 		dataToUse.tense[tense].irregular = $(".irregular-flag").prop('checked');
-		console.log(dataToUse);
+		// console.log(dataToUse);
 		$("span.new-verb.je").html(je);
 		$("span.new-verb.tu").html(tu);
 		$("span.new-verb.il").html(il);
@@ -227,7 +223,6 @@ $(document).ready(function() {
 	
 	$(".next-tense").click(function (event) {
 		$(".save-tense").show();
-		$(".previous-tense").hide();
 		$(".next-tense").hide();
 		$("span.new-verb.je").html("<input class='new-verb je'>");
 		$("span.new-verb.tu").html("<input class='new-verb tu'>");
@@ -239,6 +234,21 @@ $(document).ready(function() {
 		$(".tense-progress").text(tenseCount);
 		var infinitive = $(".new-infinitive").text();
 		conjugateVerb(infinitive, tenseChecker(tenseCount));
+	});
+
+	$("#createVerb").click(function () {
+		url = "/api/verbs";
+		$.ajax({
+			method: "POST",
+			url: url,
+			data: dataToUse,
+			success: function (data) {
+				$(".search-error").empty();
+				$("#newVerbModal").modal("hide");
+
+				renderConjugation(data);
+			}
+		});
 	});
 });
 
@@ -299,9 +309,11 @@ function renderConjugation(verb) {
 function tenseChecker(tenseCount) {
 	if (tenseCount === 1) {
 		tense = "present";
+		$(".current-tense").text(tense);
 		return tense;
 	} else if (tenseCount === 2) {
 		tense = "imparfait";
+		$(".current-tense").text(tense);
 		return tense;
 	}
 }
@@ -366,5 +378,15 @@ function conjugateVerb(infinitive, tense) {
 				$("input.new-verb.ils").val(stem + "issaient");
 			}
 		}
+	}
+}
+
+function newVerbButtonCheck(tenseCount) {
+	if (tenseCount > 1 ) {
+		if (tenseCount < tenseMax) {
+			$(".next-tense").show();
+		}
+	} else if (tenseCount === 1) {
+		$(".next-tense").show();
 	}
 }
