@@ -11,7 +11,16 @@ var tenseCount = 0;
 var tenseMax = 2;
 
 $(document).ready(function() {
+
 	console.log("sanity check. JS is working");
+
+	/*
+	*		TABLE OF CONTENTS:
+	*		1. MAIN PAGE JS
+	*		2. LIST PAGE JS
+	*/
+
+	// 1. MAIN PAGE JS:
 
 	$("input.verb-search").keydown(function handler(event) {
 		if (event.which === 13) {
@@ -250,6 +259,12 @@ $(document).ready(function() {
 			}
 		});
 	});
+
+	// 2. LIST PAGE JS:
+
+	
+
+
 });
 
 function renderConjugation(verb) {
