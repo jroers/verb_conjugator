@@ -104,12 +104,12 @@ $(document).ready(function() {
 	$("#verbs").on('click', '.edit-tense.edit', function (event) {
 		$(".edit-tense.save").show();
 		$(".edit-tense.edit").hide();
-		var je = $(".je").text();
-		var tu = $(".tu").text();
-		var il = $(".il").text();
-		var nous = $(".nous").text();
-		var vous = $(".vous").text();
-		var ils = $(".ils").text();
+		var je = $("span.conjugation.je").text();
+		var tu = $("span.conjugation.tu").text();
+		var il = $("span.conjugation.il").text();
+		var nous = $("span.conjugation.nous").text();
+		var vous = $("span.conjugation.vous").text();
+		var ils = $("span.conjugation.ils").text();
 		$(".je").html("<input type='text' class='je'>");
 		$("input.je").val(je);
 		$(".tu").html("<input type='text' class='tu'>");
