@@ -17,112 +17,26 @@
     <!-- APPLICATION SCRIPTS -->
     <script src="app.js"></script>
   </head>
-  <body>
+  <body id="list-page">
     <div class="jumbotron">
       <div class="container">
-        <h1>Kon-ju gator</h1>
-        <p>Your source for French verbs!</p>
+        <h1>Kon-ju gator - Lists</h1>
+        <p>French verbs - sorted</p>
       </div>
     </div>
 
     <section class="container">
       <div class="row">
         <div class="col-md-10 col-md-offset-1">
-          <h2>Tapez un verbe / Type a verb:</h2>
-          <input type="text" placeholder="Type a verb" class="verb-search">
-          <p class="search-error"></p>
+          <h1>UNDER CONSTRUCTION</h1>
         </div>
-      <!--   <div class="col-md-4">
-          <button class="btn btn-primary">Aimer</button>
-        </div>
-        <div class="col-md-4">
-          <button class="btn btn-primary">Avoir</button>
-        </div>
-        <div class="col-md-4">
-          <button class="btn btn-primary">Faire</button>
-        </div> -->
       </div>
 
       <!-- verb stuff! -->
-      <div id='verbs'>
-
+      <div id='lists'>
+        
       </div>
     </section>
-
-     <!-- begin newVerbModal: this is not visible until you call .modal() on it -->
-    <div class="modal fade" tabindex="-1" role="dialog" id="newVerbModal">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title">New Verb: <strong><span class='new-infinitive'></span></strong></h4>
-          </div>
-          <div class="modal-body">
-            <div class="row">
-              <div class="col-md-12 notice">
-                <h3>Current tense: <span class="current-tense"></span></h3>
-                <p>NOTE: These conjugations assume regularity. If it is irregular, please check the "irregular" box and update accordingly.</p>
-              </div>
-            </div>
-            <div class="row">
-                
-              <div class="row new-verb">
-                <div class="col-md-9">
-                  <div class="col-md-6 center bottom">
-                    <h1>Je</h1>
-                    <span class="new-verb je"></span>
-                  </div>
-                  <div class="col-md-6 bottom">
-                    <h1>Nous</h1>
-                    <span class="new-verb nous"><input class="new-verb nous"></span>
-                  </div>
-                  <div class="col-md-6 center bottom">
-                    <h1>Tu</h1>
-                    <span class="new-verb tu"><input class="new-verb tu"></span>
-                  </div>
-                  <div class="col-md-6 bottom">
-                    <h1>Vous</h1>
-                    <span class="new-verb vous"><input class="new-verb vous"></span>
-                 </div>
-                  <div class="col-md-6 center">
-                    <h1>Il/Elle/On</h1>
-                    <span class="new-verb il"><input class="new-verb il"></span>
-                  </div>
-                  <div class="col-md-6">
-                    <h1>Ils/Elles</h1>
-                    <span class="new-verb ils"><input class="new-verb ils"></span>
-                  </div>
-                </div>
-                <div class="col-md-3 button-sidebar">
-                  <p>
-                    Irregular? <input class="irregular-flag" type="checkbox">
-                  </p>
-                  <p>
-                    <button class="btn btn-success save-tense">Save</button>
-                  </p>
-                  <p>
-                    <button class="btn btn-primary next-tense">Next</button>
-                  </p>
-             <!-- <p>
-                    <button class="btn btn-primary previous-tense">Previous</button>
-                  </p> -->
-                  <p>
-                    Current tense:
-                    <br>
-                    <span class="tense-progress">1</span> of 2
-                  </p>
-                </div>
-              </div>
-
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-success" id="createVerb">Save</button>
-            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-          </div>
-        </div><!-- /.modal-content -->
-      </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
 
   </body>
 </html>
