@@ -642,7 +642,7 @@ function renderListData(list) {
 function listOfVerbsToEdit(verb) {
 	var verbsToEditHtml =
 	"		  <div class='col-md-12 edit-verb-list' id='" + verb._id + "'>" +
-    "            <div class='col-md-6'>" + verb.infinitive + "</div>" +
+    "            <div class='col-md-5'>" + verb.infinitive + "</div>" +
     "            <div class='col-md-2'>" +
     "              <button class='btn btn-danger delete-verb'>X</button>" +
     "            </div>" +
