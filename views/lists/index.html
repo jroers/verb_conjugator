@@ -61,7 +61,7 @@
                 <label class="col-md-4 control-label" for="verbs">Verbs (press ctrl/⌘ + click to multi-select):</label>
                 <!-- consider turning this into a drop down -->
                 <div class="col-md-7 col-md-offset-1">
-                  <select id="verbs" name="verbs" multiple="true">
+                  <select class="verbs" name="verbs" multiple="true">
                   <!-- Populated by the list of verbs -->
                   </select>
                 </div>
@@ -85,5 +85,58 @@
 
     </section>
 
+    <!-- begin editListModal: this is not visible until you call .modal() on it -->
+    <div class="modal fade" tabindex="-1" role="dialog" id="editListModal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Edit List: <strong><span class='list-name title'></span></strong></h4>
+          </div>
+          <div class="modal-body">
+            <fieldset>
+              <!-- Form Name -->
+              <legend>New Verb List:</legend>
+
+              <!-- Text input-->
+              <div class="form-group">
+                <label class="col-md-4 control-label" for="name">Name:</label>
+                <div class="col-md-7 col-md-offset-1">
+                  <input id="editName" name="name" type="text" class="form-control input-md" required="">
+
+                </div>
+              </div>
+
+              <!-- Textarea -->
+              <div class="form-group">
+                <label class="col-md-4 control-label" for="newDescription">Description of contents:</label>
+                <div class="col-md-7 col-md-offset-1">
+                  <textarea class="form-control" id="editDescription" name="description"></textarea>
+                </div>
+              </div>
+            </fieldset>
+          </div>
+          <div class="modal-body">
+            <fieldset></fieldset>
+            
+              <!-- Dropdown menu -->
+              <div class="form-group">
+                <label class="col-md-4 control-label" for="verbs">Verbs:</label>
+                <!-- consider turning this into a drop down -->
+                <div class="col-md-7 col-md-offset-1">
+                  <select class="verbs" name="verbs">
+                  <!-- Populated by the list of verbs -->
+                  </select>
+                </div>
+              </div>
+            </fieldset>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-success" id="createVerb">Save</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+  
   </body>
 </html>

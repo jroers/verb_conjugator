@@ -325,7 +325,7 @@ $(document).ready(function() {
 				  	}
 				});
 				data.forEach(function (element) {
-					$("#verbs").append("<option value='" + element._id + "''>" + element.infinitive + "</option>");
+					$(".verbs").append("<option value='" + element._id + "''>" + element.infinitive + "</option>");
 				});
 			}
 		});
@@ -366,6 +366,7 @@ $(document).ready(function() {
 		$("#lists").on("click", ".edit-list", function (event) {
 			console.log("Edit button clicked!");
 			var listId = $(this).parents(".row").attr("id");
+			$("#editListModal").modal("show");
 		});
 
 
