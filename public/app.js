@@ -372,6 +372,8 @@ $(document).ready(function() {
 				url: "/api/list/" + listId,
 				success: function (data) {
 					console.log(data);
+					$("#editName").val(data.name);
+					$("#editDescription").val(data.description);
 				}
 			});
 		});
