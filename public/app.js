@@ -5,6 +5,7 @@ var tense;
 var url;
 var dataToUse = {};
 var id;
+var tenseChangePrevent = 0;
 var tenseCount = 0;
 
 //update this variable with the maxiumum number of tenses stored.
@@ -67,7 +68,8 @@ $(document).ready(function() {
 					});
 				} else {
 					$("#verbs").empty();
-					$(".search-error").html("Euh, je ne crois pas que ce soit un verbe.<br />Please type a valid infinitive.");
+					$(".search-error").html("Euh, je ne crois pas que ce soit un verbe." +
+						"<br />Please type a valid infinitive.");
 				}
 			}
 		});
@@ -125,8 +127,12 @@ $(document).ready(function() {
 		});
 
 		$("#verbs").on('click', '.edit-tense.edit', function (event) {
+			$("input.verb-search").hide();
 			$(".edit-tense.save").show();
 			$(".edit-tense.edit").hide();
+			$(".imparfait").hide();
+			$(".present").hide();
+			tenseChangePrevent = 1;
 			var je = $("span.conjugation.je").text();
 			var tu = $("span.conjugation.tu").text();
 			var il = $("span.conjugation.il").text();
@@ -148,8 +154,12 @@ $(document).ready(function() {
 		});
 
 		$("#verbs").on('click', '.edit-tense.save', function (event) {
+			$("input.verb-search").show();
 			$(".edit-tense.edit").show();
 			$(".edit-tense.save").hide();
+			$(".imparfait").show();
+			$(".present").show();
+			tenseChangePrevent = 0;
 			id = $(".row.verb-conjugation").attr('id');
 			var je = $("input.je").val();
 			var tu = $("input.tu").val();
@@ -439,6 +449,7 @@ function conjugateVerb(infinitive, tense) {
 			$("input.new-verb.nous").val(stem + "ons");
 			$("input.new-verb.vous").val(stem + "ez");
 			$("input.new-verb.ils").val(stem + "ent");
+		
 		} else if (family === "re") {
 			$("input.new-verb.je").val(stem + "s");
 			$("input.new-verb.tu").val(stem + "s");
@@ -446,6 +457,7 @@ function conjugateVerb(infinitive, tense) {
 			$("input.new-verb.nous").val(stem + "ons");
 			$("input.new-verb.vous").val(stem + "ez");
 			$("input.new-verb.ils").val(stem + "ent");
+		
 		} else if (family === "ir") {
 			$("input.new-verb.je").val(stem + "is");
 			$("input.new-verb.tu").val(stem + "is");
@@ -471,6 +483,7 @@ function conjugateVerb(infinitive, tense) {
 				$("input.new-verb.nous").val(stem + "ions");
 				$("input.new-verb.vous").val(stem + "iez");
 				$("input.new-verb.ils").val(stem + "aient");
+			
 			} else if (family === "re") {
 				$("input.new-verb.je").val(stem + "ais");
 				$("input.new-verb.tu").val(stem + "ais");
@@ -478,6 +491,7 @@ function conjugateVerb(infinitive, tense) {
 				$("input.new-verb.nous").val(stem + "ions");
 				$("input.new-verb.vous").val(stem + "iez");
 				$("input.new-verb.ils").val(stem + "aient");
+			
 			} else if (family === "ir") {
 				$("input.new-verb.je").val(stem + "issais");
 				$("input.new-verb.tu").val(stem + "issais");
@@ -532,6 +546,7 @@ function renderListData(list) {
         "</div>";
     $("#lists").append(listHtml);
     list.verbs.forEach(function (element) {
-    	$("#" + list._id + " .verb-list").append("<span id='" + element._id + "' class='infinitive'>" + element.infinitive + " &ndash; </span>");
+    	$("#" + list._id + " .verb-list").append("<span id='" + element._id + 
+    		"' class='infinitive'>" + element.infinitive + " &ndash; </span>");
     });
 }
