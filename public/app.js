@@ -409,9 +409,16 @@ $(document).ready(function() {
 		});
 
 		$("#editListModal").on("click", ".verb-addition", function () {
-			// Take verb selection and append it to the list of other verbs.
-			$(".drop-down").remove();
-			$(".modal-body.part2 fieldset").append(editListModalButtonHtml);
+			var verbId = $(".drop-down select").val();
+			$.ajax({
+				method: 'GET',
+				url: '/api/verbid/' + verbId,
+				success: function (data) {
+					listOfVerbsToEdit(data);
+					$(".drop-down").remove();
+					$(".modal-body.part2 fieldset").append(editListModalButtonHtml);
+				}
+			});
 		});
 
 
