@@ -104,8 +104,13 @@ app.get('/api/list/:_id', function getListData (req, res) {
 
 app.put('/api/list/:_id', function updateListData (req, res) {
 	db.List.findById(req.params._id, function (err, foundList) {
-		console.log(foundList);
-		//Update with appropriate update information
+		var updatedList = foundList;
+		updatedList.name = req.body.name;
+		updatedList.description = req.body.description;
+		updatedList.verbs = req.body.verbs;
+		updatedList.save(function (err, savedList) {
+			res.send(updatedList);
+		});
 	});
 });
 

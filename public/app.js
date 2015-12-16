@@ -442,7 +442,9 @@ $(document).ready(function() {
 				url: "/api/list/" + listId,
 				data: dataToUse,
 				success: function (data){
-					console.log(data);
+					$("#editListModal").modal("hide");
+					$("#lists").empty();
+					getLists();
 				}
 			});
 		});
