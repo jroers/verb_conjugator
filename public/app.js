@@ -41,6 +41,11 @@ $(document).ready(function() {
 	*			c. Handling submission of a new list
 	*			d. Handling deletion of an existing list
 	* 			e. Handling editing of existing list
+	*			f. Adding a new verb to an existing list
+	*			g. Canceling the addition of a new verb
+	*			h. Adding the verb selected from a drop down
+	*			i. Removing a pre-existing verb from a list
+	*			j. Saving the updated list data
 	*/
 
 	// 1. MAIN PAGE JS:
@@ -317,6 +322,7 @@ $(document).ready(function() {
 	}
 
 	if ($("#list-page").length >= 1) {
+		dataToUse = {};
 		//Gets all of the infinitives for the multi-select menu on page load
 		$.ajax({
 			method: "GET",
@@ -372,6 +378,7 @@ $(document).ready(function() {
 
 		$("#lists").on("click", ".edit-list", function (event) {
 			var listId = $(this).parents(".row").attr("id");
+			$("#editListModal").data("list-id", listId);
 			$(".modal-body.part2 fieldset").empty();
 			$("#editListModal").modal("show");
 			$.ajax({
@@ -419,6 +426,25 @@ $(document).ready(function() {
 		$("#editListModal").on("click", ".delete-verb", function () {
 			var id = $(this).parents('.edit-verb-list').attr('id');
 			$("#" + id).remove();
+		});
+
+		$("#createVerb").click(function () {
+			var listId = $("#editListModal").data("list-id");
+			var verbIds = [];
+			$(".edit-verb-list").each(function () {
+				verbIds.push($(this).attr('id'));
+			});
+			dataToUse.name = $("#editName").val();
+			dataToUse.description = $("#editDescription").val();
+			dataToUse.verbs = verbIds;
+			$.ajax({
+				method: 'PUT',
+				url: "/api/list/" + listId,
+				data: dataToUse,
+				success: function (data){
+					console.log(data);
+				}
+			});
 		});
 	}
 });
