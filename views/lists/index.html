@@ -42,27 +42,29 @@
               <!-- Text input-->
               <div class="form-group">
                 <label class="col-md-4 control-label" for="name">Name:</label>
-                <div class="col-md-8">
-                <input id="name" name="name" type="text" placeholder="What would you like to call this list?" class="form-control input-md" required="">
+                <div class="col-md-7 col-md-offset-1">
+                <input id="name" name="name" type="text" class="form-control input-md" required="">
 
                 </div>
               </div>
 
               <!-- Textarea -->
               <div class="form-group">
-                <label class="col-md-4 control-label" for="newDescription">Description of contents</label>
-                <div class="col-md-8">
+                <label class="col-md-4 control-label" for="newDescription">Description of contents:</label>
+                <div class="col-md-7 col-md-offset-1">
                   <textarea class="form-control" id="newDescription" name="description"></textarea>
                 </div>
               </div>
 
               <!-- Dropdown menu -->
               <div class="form-group">
-                <label class="col-md-4 control-label" for="verbs">Verbs</label>
+                <label class="col-md-4 control-label" for="verbs">Verbs (press ctrl/⌘ + click to multi-select):</label>
                 <!-- consider turning this into a drop down -->
-                <select class="col-md-8" id="verbs" name="verbs[]" multiple="true">
+                <div class="col-md-7 col-md-offset-1">
+                  <select id="verbs" name="verbs" multiple="true">
                   <!-- Populated by the list of verbs -->
-                </select>
+                  </select>
+                </div>
               </div>
 
               <!-- Button -->

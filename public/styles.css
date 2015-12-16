@@ -53,6 +53,12 @@ span input {
 	text-align: center;
 }
 
+#newList select {
+	margin: 0 auto;
+	width: 100%;
+}
+
 .panel-body {
 	text-align: left;
 }
+
