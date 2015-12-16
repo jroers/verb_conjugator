@@ -53,6 +53,6 @@ span input {
 	text-align: center;
 }
 
-#lists {
-	text-align: center;
+.panel-body {
+	text-align: left;
 }

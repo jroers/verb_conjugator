@@ -261,8 +261,54 @@ $(document).ready(function() {
 	});
 
 	// 2. LIST PAGE JS:
+	if ($("#list-page").length >= 1) {
+		//Gets all of the list information on page load
+		$.ajax({
+			method: "GET",
+			url: '/api/verbs',
+			success: function (data) {
+				console.log(data);
+				//Sorts the array in alphabetical order of infinitives for easier drop-down menu selection
+				data.sort(function(a, b) {
+				  	if (a.infinitive < b.infinitive) {
+				  		return -1;
+				 	} else if (a.infinitive > b.infinitive) {
+				    	return 1;
+				  	} else  {
+				     	return 0;
+				  	}
+				});
+				data.forEach(function (element) {
+					$("#verbs").append("<option value='" + element._id + "''>" + element.infinitive + "</option>");
+				});
+			}
+		});
 
-	
+		$.ajax({
+			method: 'GET',
+			url: '/api/list',
+			success: function (data) {
+				console.log(data);
+				data.forEach(function (element) {
+					renderListData(element);
+				});
+			}
+		});
+
+		$("#newList").submit(function (event) {
+			event.preventDefault();
+			var data = $(this).serialize();
+			$.ajax({
+				method: "POST",
+				url: "/api/list",
+				data: data,
+				success: function (data) {
+					console.log(data);
+					renderListData(data);
+				}
+			});
+		});
+	}
 
 
 });
@@ -404,4 +450,42 @@ function newVerbButtonCheck(tenseCount) {
 	} else if (tenseCount === 1) {
 		$(".next-tense").show();
 	}
+}
+
+function renderListData(list) {
+	$("#lists").empty();
+	console.log(list.verbs);
+	var listHtml = 
+        "<div class='row list' id='" + list._id + "'>" +
+        "  <div class='col-md-10 col-md-offset-1'>" +
+        "    <div class='panel panel-default'>" +
+        "      <div class='panel-body'>" +
+        "        <div class='row'>" +
+        "          <ul class='list-group'>" +
+        "            <div class='list-group-item'>" +
+        "              <h3 class='inline-header'>Name: </h3>" +
+        "              <span class='name'>" + list.name + "</span>" +
+        "            </div>" +
+        "            <div class='list-group-item'>" +
+        "              <h3 class='inline-header'>Description:</h3>" +
+        "              <span class='name'>" + list.description + "</span>" +
+        "            </div>" +
+        "            <div class='list-group-item verb-list'>" +
+        "              <h3 class='inline-header'>Verbs:</h3>" +
+        "			   <span> &ndash; </span>" +
+        "            </div>" +
+        "          </ul>" +
+        "        </div>" +
+        "      </div>" +
+        "      <div class='panel-footer'>" +
+        "        <button class='btn btn-primary update-list'>Update List</button>" +
+        "        <button class='btn btn-danger delete-list'>Delete List</button>" +
+        "      </div>" + 
+        "    </div>" +
+        "  </div>" +
+        "</div>";
+    $("#lists").append(listHtml);
+    list.verbs.forEach(function (element) {
+    	$("#" + list._id + " .verb-list").append("<span id='" + element._id + "' class='name'>" + element.infinitive + " &ndash; </span>");
+    });
 }

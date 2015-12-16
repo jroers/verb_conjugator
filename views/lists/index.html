@@ -20,7 +20,7 @@
   <body id="list-page">
     <div class="jumbotron">
       <div class="container">
-        <h1>Kon-ju gator - Lists</h1>
+        <h1>Kon-ju gator: Lists</h1>
         <p>French verbs - sorted</p>
       </div>
     </div>
@@ -46,23 +46,24 @@
               <div class="form-group">
                 <label class="col-md-4 control-label" for="newDescription">Description of contents</label>
                 <div class="col-md-8">
-                  <textarea class="form-control" id="newDescription" name="genres"></textarea>
+                  <textarea class="form-control" id="newDescription" name="description"></textarea>
                 </div>
               </div>
 
               <!-- Dropdown menu -->
-              <label class="col-md-4 control-label" for="verbs">Verbs</label>
-              <select class="col-md-8" id="verbs">
-                <option value="566b4f2ffeab6fd863ee76c5">aimer</option>
-                <option value="566b4f2ffeab6fd863ee76c2">faire</option>
-                <option value="566b4f2ffeab6fd863ee76bf">avoir</option>
-              </select>
+              <div class="form-group">
+                <label class="col-md-4 control-label" for="verbs">Verbs</label>
+                <!-- consider turning this into a drop down -->
+                <select class="col-md-8" id="verbs" name="verbs[]" multiple="true">
+                  <!-- Populated by the list of verbs -->
+                </select>
+              </div>
 
               <!-- Button -->
               <div class="form-group">
          <!-- <label class="col-md-4 control-label" for="singlebutton">Create</label> -->
                 <div class="col-md-2 col-md-offset-5">
-                  <button id="singlebutton" name="singlebutton" class="btn btn-primary">Create</button>
+                  <button id="singlebutton" class="btn btn-primary">Create</button>
                 </div>
               </div>
             </fieldset>
@@ -72,8 +73,8 @@
 
       <!-- verb stuff! -->
       <div id='lists'>
-        <h1>LISTS WILL GO HERE</h1>
       </div>
+      
     </section>
 
   </body>

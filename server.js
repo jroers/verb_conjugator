@@ -92,7 +92,8 @@ app.put('/api/verbid/:_id', function updateVerb (req, res) {
  */
 
 app.get('/api/list', function listsList (req, res) {
-	db.List.find({}, function (err, success) {
+	db.List.find({}).populate('verbs').exec(function (err, success) {
+		console.log(success);
 		if (err) { return console.log(err); }
 		res.send(success);
 	});
@@ -102,8 +103,8 @@ app.post('/api/list', function newList (req, res) {
 	db.List.create(req.body, function (err, success) {
 		if (err) { return console.log(err); }
 		res.send(success);
-	})
-})
+	});
+});
 
  // listen on port 3000
 app.listen(process.env.PORT || 3000, function () {
