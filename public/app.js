@@ -16,249 +16,273 @@ $(document).ready(function() {
 
 	/*
 	*		TABLE OF CONTENTS:
-	*		1. MAIN PAGE JS
+	*		1. MAIN (SEARCH) PAGE JS
+	*			a. Searching for a verb
+	*			b. Switching to the present tense
+	*			c. Switching to the imparfait tense
+	*			d. Edit current tense button
+	*			e. Save current edits button
+	*			f. Create verb modal button
+	*			g. Save current tense of creation modal
+	*			h. Next tense of creation modal
+	*			i. Save created verb button
 	*		2. LIST PAGE JS
+	*			a. Function for rendering list data to page
+	*			b. Call to populate multi-select field
+	*			c. Handling submission of a new list
+	*			d. Handling deletion of an existing list
+	* 			e. Handling editing of existing list
 	*/
 
 	// 1. MAIN PAGE JS:
-
-	$("input.verb-search").keydown(function handler(event) {
-		if (event.which === 13) {
-			// console.log("Hey there");
-			var infinitive = $(this).val().toLowerCase();
-			var family = infinitive.slice(infinitive.length-2, infinitive.length);
-			if (family === "er" || family === "re" || family === "ir") {
-				var url = "/api/verbname/" + infinitive;
-				$.ajax({
-					method: "GET",
-					url: url,
-					success: function (data) {
-						//Checks that there is actually information to work with
-						if (data.length > 0) {
-							$(".search-error").empty();
-							renderConjugation(data[0]);
-							tense = "present";
-						} else {
-							$(".search-error").html("Dommage ! Il me semble que ce verbe n'existe pas.<br />" +
-								"Oops! Looks like this verb doesn't exist yet.<br />" +
-								"<button class='btn btn-primary new-verb'>Create?</button>");
+	if ($("#main-page").length >= 1) {
+		$("input.verb-search").keydown(function handler(event) {
+			if (event.which === 13) {
+				// console.log("Hey there");
+				var infinitive = $(this).val().toLowerCase();
+				var family = infinitive.slice(infinitive.length-2, infinitive.length);
+				if (family === "er" || family === "re" || family === "ir") {
+					var url = "/api/verbname/" + infinitive;
+					$.ajax({
+						method: "GET",
+						url: url,
+						success: function (data) {
+							//Checks that there is actually information to work with
+							if (data.length > 0) {
+								$(".search-error").empty();
+								renderConjugation(data[0]);
+								tense = "present";
+							} else {
+								$(".search-error").html("Dommage ! Il me semble que ce verbe n'existe pas.<br />" +
+									"Oops! Looks like this verb doesn't exist yet.<br />" +
+									"<button class='btn btn-primary new-verb'>Create?</button>");
+								$("#verbs").empty();
+							}
+						},
+						error: function (error) {
+							console.log("search error: ", error);
 							$("#verbs").empty();
+							$(".search-error").html("Search currently unavailable.");
 						}
-					},
-					error: function (error) {
-						console.log("search error: ", error);
-						$("#verbs").empty();
-						$(".search-error").html("Search currently unavailable.");
-					}
-				});
-			} else {
-				$("#verbs").empty();
-				$(".search-error").html("Euh, je ne crois pas que ce soit un verbe.<br />Please type a valid infinitive.");
-			}
-		}
-	});
-
-	$("#verbs").on('click', '.present', function (event) {
-		id = $(".row.verb-conjugation").attr('id');
-		// console.log(id);
-		$.ajax({
-			method: "GET",
-			data: {_id: id},
-			url: "/api/verbid/" + id,
-			success: function (data) {
-				// console.log(data);
-				tense = "present";
-				$(".je").text(data.tense.present.je);
-				$(".tu").text(data.tense.present.tu);
-				$(".il").text(data.tense.present.il);
-				$(".nous").text(data.tense.present.nous);
-				$(".vous").text(data.tense.present.vous);
-				$(".ils").text(data.tense.present.ils);
-				$(".tense").removeClass("btn-success");
-				$(".tense").addClass("btn-primary");
-				$(".present").addClass("btn-success");
-			},
-			error: function (error) {
-				console.log("Present tense error: ", error);
+					});
+				} else {
+					$("#verbs").empty();
+					$(".search-error").html("Euh, je ne crois pas que ce soit un verbe.<br />Please type a valid infinitive.");
+				}
 			}
 		});
-	});
 
-	$("#verbs").on('click', '.imparfait', function (event) {
-		id = $(".row.verb-conjugation").attr('id');
-		// console.log(id);
-		$.ajax({
-			method: "GET",
-			data: {_id: id},
-			url: "/api/verbid/" + id,
-			success: function (data) {
-				// console.log(data);
-				tense = "imparfait";
-				$(".je").text(data.tense.imparfait.je);
-				$(".tu").text(data.tense.imparfait.tu);
-				$(".il").text(data.tense.imparfait.il);
-				$(".nous").text(data.tense.imparfait.nous);
-				$(".vous").text(data.tense.imparfait.vous);
-				$(".ils").text(data.tense.imparfait.ils);
-				$(".tense").removeClass("btn-success");
-				$(".tense").addClass("btn-primary");
-				$(".imparfait").addClass("btn-success");
-			},
-			error: function (error) {
-				console.log("Imparfait tense error: ", error);
-			}
+		$("#verbs").on('click', '.present', function (event) {
+			id = $(".row.verb-conjugation").attr('id');
+			// console.log(id);
+			$.ajax({
+				method: "GET",
+				data: {_id: id},
+				url: "/api/verbid/" + id,
+				success: function (data) {
+					// console.log(data);
+					tense = "present";
+					$(".je").text(data.tense.present.je);
+					$(".tu").text(data.tense.present.tu);
+					$(".il").text(data.tense.present.il);
+					$(".nous").text(data.tense.present.nous);
+					$(".vous").text(data.tense.present.vous);
+					$(".ils").text(data.tense.present.ils);
+					$(".tense").removeClass("btn-success");
+					$(".tense").addClass("btn-primary");
+					$(".present").addClass("btn-success");
+				},
+				error: function (error) {
+					console.log("Present tense error: ", error);
+				}
+			});
 		});
-	});
 
-	$("#verbs").on('click', '.edit-tense.edit', function (event) {
-		$(".edit-tense.save").show();
-		$(".edit-tense.edit").hide();
-		var je = $("span.conjugation.je").text();
-		var tu = $("span.conjugation.tu").text();
-		var il = $("span.conjugation.il").text();
-		var nous = $("span.conjugation.nous").text();
-		var vous = $("span.conjugation.vous").text();
-		var ils = $("span.conjugation.ils").text();
-		$(".je").html("<input type='text' class='je'>");
-		$("input.je").val(je);
-		$(".tu").html("<input type='text' class='tu'>");
-		$("input.tu").val(tu);
-		$(".il").html("<input type='text' class='il'>");
-		$("input.il").val(il);
-		$(".nous").html("<input type='text' class='nous'>");
-		$("input.nous").val(nous);
-		$(".vous").html("<input type='text' class='vous'>");
-		$("input.vous").val(vous);
-		$(".ils").html("<input type='text' class='ils'>");
-		$("input.ils").val(ils);
-	});
-
-	$("#verbs").on('click', '.edit-tense.save', function (event) {
-		$(".edit-tense.edit").show();
-		$(".edit-tense.save").hide();
-		id = $(".row.verb-conjugation").attr('id');
-		var je = $("input.je").val();
-		var tu = $("input.tu").val();
-		var il = $("input.il").val();
-		var nous = $("input.nous").val();
-		var vous = $("input.vous").val();
-		var ils = $("input.ils").val();
-		dataToUse.tense = tense;
-		dataToUse.je = je;
-		dataToUse.tu = tu;
-		dataToUse.il = il;
-		dataToUse.nous = nous;
-		dataToUse.vous = vous;
-		dataToUse.ils = ils;
-		$.ajax({
-			method: "PUT",
-			url: "/api/verbid/" + id,
-			data: dataToUse,
-			success: function (data) {
-				$("span.je").html(je);
-				$("span.tu").html(tu);
-				$("span.il").html(il);
-				$("span.nous").html(nous);
-				$("span.vous").html(vous);
-				$("span.ils").html(ils);
-			},
-			error: function (error) {
-				console.log(error);
-			}
+		$("#verbs").on('click', '.imparfait', function (event) {
+			id = $(".row.verb-conjugation").attr('id');
+			// console.log(id);
+			$.ajax({
+				method: "GET",
+				data: {_id: id},
+				url: "/api/verbid/" + id,
+				success: function (data) {
+					// console.log(data);
+					tense = "imparfait";
+					$(".je").text(data.tense.imparfait.je);
+					$(".tu").text(data.tense.imparfait.tu);
+					$(".il").text(data.tense.imparfait.il);
+					$(".nous").text(data.tense.imparfait.nous);
+					$(".vous").text(data.tense.imparfait.vous);
+					$(".ils").text(data.tense.imparfait.ils);
+					$(".tense").removeClass("btn-success");
+					$(".tense").addClass("btn-primary");
+					$(".imparfait").addClass("btn-success");
+				},
+				error: function (error) {
+					console.log("Imparfait tense error: ", error);
+				}
+			});
 		});
-	});
 
-	$(".search-error").on('click', 'button.new-verb', function (event) {
-		tense = "present";
-		$("span.new-verb.je").html("<input class='new-verb je'>");
-		$("span.new-verb.tu").html("<input class='new-verb tu'>");
-		$("span.new-verb.il").html("<input class='new-verb il'>");
-		$("span.new-verb.nous").html("<input class='new-verb nous'>");
-		$("span.new-verb.vous").html("<input class='new-verb vous'>");
-		$("span.new-verb.ils").html("<input class='new-verb ils'>");
-		tenseCount = 1;
-		tenseChecker(tenseCount);
-		var infinitive = $("input.verb-search").val().toLowerCase();
-		var family = infinitive.slice(infinitive.length-2, infinitive.length);
-		var stem = infinitive.slice(0, infinitive.length-2);
-
-		dataToUse.infinitive = infinitive;
-		dataToUse.family = family;
-		dataToUse.tense = {};
-
-		$(".modal-title .new-infinitive").text(infinitive);
-		$(".irregular-flag").prop('checked', false);
-
-		//hiding buttons that are currently unnecessary
-		$(".save-tense").show();
-		$(".next-tense").hide();
-		$("#createVerb").hide();
-		$("#newVerbModal").modal("show");
-		//Applies the appropriate logic to verbs depending on their family.
-		conjugateVerb(infinitive, tenseChecker(tenseCount));
-	});
-
-	$(".save-tense").click(function (event) {
-		//hides the save button and displays appropriate buttons to cycle between tense editors.
-		$(".save-tense").hide();
-		newVerbButtonCheck(tenseCount);
-		tenseChecker(tenseCount);
-		if (tenseCount === tenseMax) {
-			$("#createVerb").show();
-		}
-
-		var je = $("input.new-verb.je").val();
-		var tu = $("input.new-verb.tu").val();
-		var il = $("input.new-verb.il").val();
-		var nous = $("input.new-verb.nous").val();
-		var vous = $("input.new-verb.vous").val();
-		var ils = $("input.new-verb.ils").val();
-		dataToUse.tense[tense] = {};
-		dataToUse.tense[tense].je = je;
-		dataToUse.tense[tense].tu = tu;
-		dataToUse.tense[tense].il = il;
-		dataToUse.tense[tense].nous = nous;
-		dataToUse.tense[tense].vous = vous;
-		dataToUse.tense[tense].ils = ils;
-		dataToUse.tense[tense].irregular = $(".irregular-flag").prop('checked');
-		// console.log(dataToUse);
-		$("span.new-verb.je").html(je);
-		$("span.new-verb.tu").html(tu);
-		$("span.new-verb.il").html(il);
-		$("span.new-verb.nous").html(nous);
-		$("span.new-verb.vous").html(vous);
-		$("span.new-verb.ils").html(ils);
-	});
-	
-	$(".next-tense").click(function (event) {
-		$(".save-tense").show();
-		$(".next-tense").hide();
-		$("span.new-verb.je").html("<input class='new-verb je'>");
-		$("span.new-verb.tu").html("<input class='new-verb tu'>");
-		$("span.new-verb.il").html("<input class='new-verb il'>");
-		$("span.new-verb.nous").html("<input class='new-verb nous'>");
-		$("span.new-verb.vous").html("<input class='new-verb vous'>");
-		$("span.new-verb.ils").html("<input class='new-verb ils'>");
-		tenseCount ++;
-		$(".tense-progress").text(tenseCount);
-		var infinitive = $(".new-infinitive").text();
-		conjugateVerb(infinitive, tenseChecker(tenseCount));
-	});
-
-	$("#createVerb").click(function () {
-		url = "/api/verbs";
-		$.ajax({
-			method: "POST",
-			url: url,
-			data: dataToUse,
-			success: function (data) {
-				$(".search-error").empty();
-				$("#newVerbModal").modal("hide");
-
-				renderConjugation(data);
-			}
+		$("#verbs").on('click', '.edit-tense.edit', function (event) {
+			$(".edit-tense.save").show();
+			$(".edit-tense.edit").hide();
+			var je = $("span.conjugation.je").text();
+			var tu = $("span.conjugation.tu").text();
+			var il = $("span.conjugation.il").text();
+			var nous = $("span.conjugation.nous").text();
+			var vous = $("span.conjugation.vous").text();
+			var ils = $("span.conjugation.ils").text();
+			$(".je").html("<input type='text' class='je'>");
+			$("input.je").val(je);
+			$(".tu").html("<input type='text' class='tu'>");
+			$("input.tu").val(tu);
+			$(".il").html("<input type='text' class='il'>");
+			$("input.il").val(il);
+			$(".nous").html("<input type='text' class='nous'>");
+			$("input.nous").val(nous);
+			$(".vous").html("<input type='text' class='vous'>");
+			$("input.vous").val(vous);
+			$(".ils").html("<input type='text' class='ils'>");
+			$("input.ils").val(ils);
 		});
-	});
+
+		$("#verbs").on('click', '.edit-tense.save', function (event) {
+			$(".edit-tense.edit").show();
+			$(".edit-tense.save").hide();
+			id = $(".row.verb-conjugation").attr('id');
+			var je = $("input.je").val();
+			var tu = $("input.tu").val();
+			var il = $("input.il").val();
+			var nous = $("input.nous").val();
+			var vous = $("input.vous").val();
+			var ils = $("input.ils").val();
+			dataToUse.tense = tense;
+			dataToUse.je = je;
+			dataToUse.tu = tu;
+			dataToUse.il = il;
+			dataToUse.nous = nous;
+			dataToUse.vous = vous;
+			dataToUse.ils = ils;
+			$.ajax({
+				method: "PUT",
+				url: "/api/verbid/" + id,
+				data: dataToUse,
+				success: function (data) {
+					$("span.je").html(je);
+					$("span.tu").html(tu);
+					$("span.il").html(il);
+					$("span.nous").html(nous);
+					$("span.vous").html(vous);
+					$("span.ils").html(ils);
+				},
+				error: function (error) {
+					console.log(error);
+				}
+			});
+		});
+
+		$(".search-error").on('click', 'button.new-verb', function (event) {
+			tense = "present";
+			$("span.new-verb.je").html("<input class='new-verb je'>");
+			$("span.new-verb.tu").html("<input class='new-verb tu'>");
+			$("span.new-verb.il").html("<input class='new-verb il'>");
+			$("span.new-verb.nous").html("<input class='new-verb nous'>");
+			$("span.new-verb.vous").html("<input class='new-verb vous'>");
+			$("span.new-verb.ils").html("<input class='new-verb ils'>");
+			tenseCount = 1;
+			tenseChecker(tenseCount);
+			var infinitive = $("input.verb-search").val().toLowerCase();
+			var family = infinitive.slice(infinitive.length-2, infinitive.length);
+			var stem = infinitive.slice(0, infinitive.length-2);
+
+			dataToUse.infinitive = infinitive;
+			dataToUse.family = family;
+			dataToUse.tense = {};
+
+			$(".modal-title .new-infinitive").text(infinitive);
+			$(".irregular-flag").prop('checked', false);
+
+			//hiding buttons that are currently unnecessary
+			$(".save-tense").show();
+			$(".next-tense").hide();
+			$("#createVerb").hide();
+			$("#newVerbModal").modal("show");
+			//Applies the appropriate logic to verbs depending on their family.
+			conjugateVerb(infinitive, tenseChecker(tenseCount));
+		});
+
+		$(".save-tense").click(function (event) {
+			//hides the save button and displays appropriate buttons to cycle between tense editors.
+			$(".save-tense").hide();
+			newVerbButtonCheck(tenseCount);
+			tenseChecker(tenseCount);
+			if (tenseCount === tenseMax) {
+				$("#createVerb").show();
+			}
+
+			var je = $("input.new-verb.je").val();
+			var tu = $("input.new-verb.tu").val();
+			var il = $("input.new-verb.il").val();
+			var nous = $("input.new-verb.nous").val();
+			var vous = $("input.new-verb.vous").val();
+			var ils = $("input.new-verb.ils").val();
+			dataToUse.tense[tense] = {};
+			dataToUse.tense[tense].je = je;
+			dataToUse.tense[tense].tu = tu;
+			dataToUse.tense[tense].il = il;
+			dataToUse.tense[tense].nous = nous;
+			dataToUse.tense[tense].vous = vous;
+			dataToUse.tense[tense].ils = ils;
+			dataToUse.tense[tense].irregular = $(".irregular-flag").prop('checked');
+			// console.log(dataToUse);
+			$("span.new-verb.je").html(je);
+			$("span.new-verb.tu").html(tu);
+			$("span.new-verb.il").html(il);
+			$("span.new-verb.nous").html(nous);
+			$("span.new-verb.vous").html(vous);
+			$("span.new-verb.ils").html(ils);
+		});
+		
+		$(".next-tense").click(function (event) {
+			$(".save-tense").show();
+			$(".next-tense").hide();
+			$("span.new-verb.je").html("<input class='new-verb je'>");
+			$("span.new-verb.tu").html("<input class='new-verb tu'>");
+			$("span.new-verb.il").html("<input class='new-verb il'>");
+			$("span.new-verb.nous").html("<input class='new-verb nous'>");
+			$("span.new-verb.vous").html("<input class='new-verb vous'>");
+			$("span.new-verb.ils").html("<input class='new-verb ils'>");
+			tenseCount ++;
+			$(".tense-progress").text(tenseCount);
+			var infinitive = $(".new-infinitive").text();
+			conjugateVerb(infinitive, tenseChecker(tenseCount));
+		});
+
+		$("#createVerb").click(function () {
+			url = "/api/verbs";
+			$.ajax({
+				method: "POST",
+				url: url,
+				data: dataToUse,
+				success: function (data) {
+					$(".search-error").empty();
+					$("#newVerbModal").modal("hide");
+
+					renderConjugation(data);
+				}
+			});
+		});
+	}
+
+
+
+
+
+
+
+
+
 
 	// 2. LIST PAGE JS:
 
@@ -313,10 +337,29 @@ $(document).ready(function() {
 				}
 			});
 		});
+
+		$("#lists").on("click", ".delete-list", function (event) {
+			console.log("Delete button clicked!");
+			var listId = $(this).parents(".row").attr("id");
+		});
+
+		$("#lists").on("click", ".edit-list", function (event) {
+			console.log("Edit button clicked!");
+			var listId = $(this).parents(".row").attr("id");
+		});
+
+
 	}
-
-
 });
+
+
+
+
+
+
+
+
+
 
 function renderConjugation(verb) {
 	if ($(".verb-conjugation")) {
@@ -480,8 +523,8 @@ function renderListData(list) {
         "          </ul>" +
         "        </div>" +
         "      </div>" +
-        "      <div class='panel-footer'>" +
-        "        <button class='btn btn-primary update-list'>Update List</button>" +
+        "      <div class='panel-footer list-buttons'>" +
+        "        <button class='btn btn-primary edit-list'>Edit List</button>" +
         "        <button class='btn btn-danger delete-list'>Delete List</button>" +
         "      </div>" + 
         "    </div>" +
