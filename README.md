@@ -23,3 +23,10 @@ Added edit buttons that change the conjugations into text boxes. The text boxes 
 Searching for a verb that has a valid infinitive structure (ends in "ir", "er" or "re") presents a button to create a new verb from the typed infinitive.
 
 Clicking the "Create?" button opens up a Create Verb modal that will populate with manipulations of the typed infinitive.
+
+#Sprint 4:
+Created secondary html page at the path /lists. This will hold all of the list information that contains verbs.
+
+At the top of the lists page is a list creation form. Currently, the database is fairly small, so the multi-select field works. Research should be done to implement an auto-complete search bar.
+
+Upon submission of a new list, the page will update to show all of the lists.
