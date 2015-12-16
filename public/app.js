@@ -1,6 +1,11 @@
 //GLOBAL VARIABLES
 //Functions are at the bottom.
 
+var editListModalButtonHtml = 
+'<div class="col-md-12 addVerb">' +
+'  <button class="btn btn-success" id="addVerb">Add another verb</button>' +
+'</div>';
+
 var tense;
 var url;
 var dataToUse = {};
@@ -8,8 +13,11 @@ var id;
 var tenseChangePrevent = 0;
 var tenseCount = 0;
 
+
 //update this variable with the maxiumum number of tenses stored.
 var tenseMax = 2;
+
+var dropDownContents;
 
 $(document).ready(function() {
 
@@ -324,6 +332,7 @@ $(document).ready(function() {
 				     	return 0;
 				  	}
 				});
+				dropDownContents = data;
 				data.forEach(function (element) {
 					$(".verbs").append("<option value='" + element._id + "''>" + element.infinitive + "</option>");
 				});
@@ -366,21 +375,43 @@ $(document).ready(function() {
 		$("#lists").on("click", ".edit-list", function (event) {
 			console.log("Edit button clicked!");
 			var listId = $(this).parents(".row").attr("id");
+			$(".modal-body.part2 fieldset").empty();
 			$("#editListModal").modal("show");
 			$.ajax({
 				method: 'GET',
 				url: "/api/list/" + listId,
 				success: function (data) {
 					console.log(data);
-					
+
 					$("#editName").val(data.name);
 					$("#editDescription").val(data.description);
 					data.verbs.forEach(function (element) {
 						listOfVerbsToEdit(element);
 					});
+					$(".modal-body.part2 fieldset").append(editListModalButtonHtml);
 
 				}
 			});
+		});
+
+		$("#editListModal").on("click", "#addVerb", function () {
+			//Removes the #addVerb button. It will be re-added to 
+			//the bottom of the modal once a new verb has been added.
+			$(".addVerb").remove();
+			//Calls a function that adds a dropdown that is populated with the verbs
+			//that populated the initial multi-select field.
+			renderVerbDropDownMenu();
+		});
+
+		$("#editListModal").on("click", ".cancel-addition", function () {
+			$(".drop-down").remove();
+			$(".modal-body.part2 fieldset").append(editListModalButtonHtml);
+		});
+
+		$("#editListModal").on("click", ".verb-addition", function () {
+			// Take verb selection and append it to the list of other verbs.
+			$(".drop-down").remove();
+			$(".modal-body.part2 fieldset").append(editListModalButtonHtml);
 		});
 
 
@@ -585,4 +616,26 @@ function listOfVerbsToEdit(verb) {
     "            </div>" +
     "          </div>";
     $(".modal-body.part2 fieldset").append(verbsToEditHtml);
+}
+
+function renderVerbDropDownMenu() {
+	var dropDownMenuHtml = 
+	'		  <div class="form-group drop-down">' +
+    '            <label class="col-md-4 control-label" for="verbs">Select a new verb:</label>' +
+    '            <div class="col-md-3 col-md-offset-1">' +
+    '              <select class="verbs" name="verbs">' +
+    '              </select>' +
+    '            </div>' +
+    '            <div class="col-md-2">' +
+    '              <button class="btn btn-success verb-addition">Add to list</button>' +
+    '            </div>' +
+    '            <div class="col-md-2">' +
+    '              <button class="btn btn-danger cancel-addition">Cancel</button>' +
+    '            </div>' +
+    '          </div>';
+    $(".modal-body.part2 fieldset").append(dropDownMenuHtml);
+    dropDownContents.forEach(function (element) {
+    	$(".drop-down select").append("<option value='" + element._id + "''>" + element.infinitive + "</option>");
+    });
+
 }
