@@ -267,7 +267,6 @@ $(document).ready(function() {
 			method: 'GET',
 			url: '/api/list',
 			success: function (data) {
-				console.log(data);
 				data.forEach(function (element) {
 					renderListData(element);
 				});
@@ -276,7 +275,7 @@ $(document).ready(function() {
 	}
 
 	if ($("#list-page").length >= 1) {
-		//Gets all of the list information on page load
+		//Gets all of the infinitives for the multi-select menu on page load
 		$.ajax({
 			method: "GET",
 			url: '/api/verbs',
@@ -490,6 +489,6 @@ function renderListData(list) {
         "</div>";
     $("#lists").append(listHtml);
     list.verbs.forEach(function (element) {
-    	$("#" + list._id + " .verb-list").append("<span id='" + element._id + "' class='name'>" + element.infinitive + " &ndash; </span>");
+    	$("#" + list._id + " .verb-list").append("<span id='" + element._id + "' class='infinitive'>" + element.infinitive + " &ndash; </span>");
     });
 }
