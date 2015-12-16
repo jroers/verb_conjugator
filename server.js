@@ -95,6 +95,13 @@ app.get('/api/list', function listsList (req, res) {
 	});
 });
 
+app.get('/api/list/:_id', function getListData (req, res) {
+	db.List.findById(req.params._id).populate('verbs').exec(function (err, success) {
+		if (err) { return console.log(err); }
+		res.send(success);
+	});
+});
+
 app.post('/api/list', function newList (req, res) {
 	db.List.create(req.body, function (err, success) {
 		if (err) { return console.log(err); }

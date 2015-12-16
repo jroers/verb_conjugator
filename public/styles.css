@@ -65,3 +65,7 @@ span input {
 .list-buttons {
 	text-align: left;
 }
+
+.edit-verb-list {
+	padding-top: 5px;
+}

@@ -93,10 +93,8 @@
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             <h4 class="modal-title">Edit List: <strong><span class='list-name title'></span></strong></h4>
           </div>
-          <div class="modal-body">
+          <div class="modal-body part1">
             <fieldset>
-              <!-- Form Name -->
-              <legend>New Verb List:</legend>
 
               <!-- Text input-->
               <div class="form-group">
@@ -116,12 +114,25 @@
               </div>
             </fieldset>
           </div>
-          <div class="modal-body">
-            <fieldset></fieldset>
-            
-              <!-- Dropdown menu -->
+          <!-- To be removed and added to app.js -->
+          <div class="modal-body part2">
+            <fieldset>
+              <div class="col-md-12 edit-verb-list" id="verbId">
+                <div class="col-md-6">
+                  Example Verb
+                </div>
+                <div class="col-md-2">
+                  <button class="btn btn-danger">X</button>
+                </div>
+              </div>
+
+              <div class="col-md-12">
+                <button class="btn btn-success" id="addVerb">+</button>
+              </div>
+
+            <!-- Dropdown menu -->
               <div class="form-group">
-                <label class="col-md-4 control-label" for="verbs">Verbs:</label>
+                <label class="col-md-4 control-label" for="verbs">Select a new verb:</label>
                 <!-- consider turning this into a drop down -->
                 <div class="col-md-7 col-md-offset-1">
                   <select class="verbs" name="verbs">
@@ -129,9 +140,11 @@
                   </select>
                 </div>
               </div>
+
             </fieldset>
+          </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-success" id="createVerb">Save</button>
+            <button type="button" class="btn btn-success" id="createVerb">Save Changes</button>
             <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
           </div>
         </div><!-- /.modal-content -->

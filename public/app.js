@@ -367,6 +367,13 @@ $(document).ready(function() {
 			console.log("Edit button clicked!");
 			var listId = $(this).parents(".row").attr("id");
 			$("#editListModal").modal("show");
+			$.ajax({
+				method: 'GET',
+				url: "/api/list/" + listId,
+				success: function (data) {
+					console.log(data);
+				}
+			});
 		});
 
 
