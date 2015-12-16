@@ -359,13 +359,11 @@ $(document).ready(function() {
 		});
 
 		$("#lists").on("click", ".delete-list", function (event) {
-			console.log("Delete button clicked!");
 			var listId = $(this).parents(".row").attr("id");
 			$.ajax({
 				method: "DELETE",
 				url: "/api/list/" + listId,
 				success: function (data) {
-					console.log(data);
 					$("#lists").empty();
 					getLists();
 				}
@@ -373,7 +371,6 @@ $(document).ready(function() {
 		});
 
 		$("#lists").on("click", ".edit-list", function (event) {
-			console.log("Edit button clicked!");
 			var listId = $(this).parents(".row").attr("id");
 			$(".modal-body.part2 fieldset").empty();
 			$("#editListModal").modal("show");
@@ -381,8 +378,6 @@ $(document).ready(function() {
 				method: 'GET',
 				url: "/api/list/" + listId,
 				success: function (data) {
-					console.log(data);
-
 					$("#editName").val(data.name);
 					$("#editDescription").val(data.description);
 					data.verbs.forEach(function (element) {
@@ -421,7 +416,10 @@ $(document).ready(function() {
 			});
 		});
 
-
+		$("#editListModal").on("click", ".delete-verb", function () {
+			var id = $(this).parents('.edit-verb-list').attr('id');
+			$("#" + id).remove();
+		});
 	}
 });
 
@@ -609,8 +607,7 @@ function renderListData(list) {
         "</div>";
     $("#lists").append(listHtml);
     list.verbs.forEach(function (element) {
-    	$("#" + list._id + " .verb-list").append("<span id='" + element._id + 
-    		"' class='infinitive'>" + element.infinitive + " &ndash; </span>");
+    	$("#" + list._id + " .verb-list").append("<span class='infinitive'>" + element.infinitive + " &ndash; </span>");
     });
 }
 
@@ -619,7 +616,7 @@ function listOfVerbsToEdit(verb) {
 	"		  <div class='col-md-12 edit-verb-list' id='" + verb._id + "'>" +
     "            <div class='col-md-6'>" + verb.infinitive + "</div>" +
     "            <div class='col-md-2'>" +
-    "              <button class='btn btn-danger'>X</button>" +
+    "              <button class='btn btn-danger delete-verb'>X</button>" +
     "            </div>" +
     "          </div>";
     $(".modal-body.part2 fieldset").append(verbsToEditHtml);
