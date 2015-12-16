@@ -102,6 +102,13 @@ app.post('/api/list', function newList (req, res) {
 	});
 });
 
+app.delete('/api/list/:_id', function removeList (req, res) {
+	db.List.remove(req.params, function (err) {
+		if (err) { return console.log(err); }
+		res.send("List deleted.");
+	});
+});
+
  // listen on port 3000
 app.listen(process.env.PORT || 3000, function () {
   console.log('Express server is running on http://localhost:3000/');

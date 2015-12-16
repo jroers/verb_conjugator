@@ -344,6 +344,7 @@ $(document).ready(function() {
 				success: function (data) {
 					$("#lists").empty();
 					getLists();
+					$("#newList").trigger("reset");
 				}
 			});
 		});
@@ -351,6 +352,15 @@ $(document).ready(function() {
 		$("#lists").on("click", ".delete-list", function (event) {
 			console.log("Delete button clicked!");
 			var listId = $(this).parents(".row").attr("id");
+			$.ajax({
+				method: "DELETE",
+				url: "/api/list/" + listId,
+				success: function (data) {
+					console.log(data);
+					$("#lists").empty();
+					getLists();
+				}
+			});
 		});
 
 		$("#lists").on("click", ".edit-list", function (event) {
