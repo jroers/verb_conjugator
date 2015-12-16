@@ -52,7 +52,6 @@ app.post('/api/verbs', function newVerb (req, res) {
 
 // searching by infinitive
 app.get('/api/verbname/:infinitive', function verbList (req, res) {
-	// console.log(req.params);
 	db.Verb.find(req.params, function (err, success) {
 		if (err) { return console.log(err); }
 		res.send(success);
@@ -61,7 +60,6 @@ app.get('/api/verbname/:infinitive', function verbList (req, res) {
 
 //searching by infinitive ID
 app.get('/api/verbid/:_id', function verbList (req, res) {
-	// console.log(req.params);
 	db.Verb.findById(req.params, function (err, success) {
 		if (err) { return console.log(err); }
 		res.send(success);
@@ -69,7 +67,6 @@ app.get('/api/verbid/:_id', function verbList (req, res) {
 });
 
 app.put('/api/verbid/:_id', function updateVerb (req, res) {
-	console.log(req.body);
 	db.Verb.findById(req.params, function (err, success) {
 		if (err) { return console.log(err); }
 		var selectedTense = req.body.tense;
@@ -93,7 +90,6 @@ app.put('/api/verbid/:_id', function updateVerb (req, res) {
 
 app.get('/api/list', function listsList (req, res) {
 	db.List.find({}).populate('verbs').exec(function (err, success) {
-		console.log(success);
 		if (err) { return console.log(err); }
 		res.send(success);
 	});
