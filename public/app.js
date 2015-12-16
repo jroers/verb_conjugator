@@ -372,8 +372,13 @@ $(document).ready(function() {
 				url: "/api/list/" + listId,
 				success: function (data) {
 					console.log(data);
+					
 					$("#editName").val(data.name);
 					$("#editDescription").val(data.description);
+					data.verbs.forEach(function (element) {
+						listOfVerbsToEdit(element);
+					});
+
 				}
 			});
 		});
@@ -569,4 +574,15 @@ function renderListData(list) {
     	$("#" + list._id + " .verb-list").append("<span id='" + element._id + 
     		"' class='infinitive'>" + element.infinitive + " &ndash; </span>");
     });
+}
+
+function listOfVerbsToEdit(verb) {
+	var verbsToEditHtml =
+	"		  <div class='col-md-12 edit-verb-list' id='" + verb._id + "'>" +
+    "            <div class='col-md-6'>" + verb.infinitive + "</div>" +
+    "            <div class='col-md-2'>" +
+    "              <button class='btn btn-danger'>X</button>" +
+    "            </div>" +
+    "          </div>";
+    $(".modal-body.part2 fieldset").append(verbsToEditHtml);
 }
