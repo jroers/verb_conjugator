@@ -261,13 +261,26 @@ $(document).ready(function() {
 	});
 
 	// 2. LIST PAGE JS:
+
+	function getLists() {
+		$.ajax({
+			method: 'GET',
+			url: '/api/list',
+			success: function (data) {
+				console.log(data);
+				data.forEach(function (element) {
+					renderListData(element);
+				});
+			}
+		});
+	}
+
 	if ($("#list-page").length >= 1) {
 		//Gets all of the list information on page load
 		$.ajax({
 			method: "GET",
 			url: '/api/verbs',
 			success: function (data) {
-				console.log(data);
 				//Sorts the array in alphabetical order of infinitives for easier drop-down menu selection
 				data.sort(function(a, b) {
 				  	if (a.infinitive < b.infinitive) {
@@ -284,16 +297,9 @@ $(document).ready(function() {
 			}
 		});
 
-		$.ajax({
-			method: 'GET',
-			url: '/api/list',
-			success: function (data) {
-				console.log(data);
-				data.forEach(function (element) {
-					renderListData(element);
-				});
-			}
-		});
+		//Gets all of the list information on page load
+		getLists();
+			
 
 		$("#newList").submit(function (event) {
 			event.preventDefault();
@@ -303,8 +309,8 @@ $(document).ready(function() {
 				url: "/api/list",
 				data: data,
 				success: function (data) {
-					console.log(data);
-					renderListData(data);
+					$("#lists").empty();
+					getLists();
 				}
 			});
 		});
@@ -453,8 +459,6 @@ function newVerbButtonCheck(tenseCount) {
 }
 
 function renderListData(list) {
-	$("#lists").empty();
-	console.log(list.verbs);
 	var listHtml = 
         "<div class='row list' id='" + list._id + "'>" +
         "  <div class='col-md-10 col-md-offset-1'>" +
