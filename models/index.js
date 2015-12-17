@@ -1,5 +1,7 @@
 var mongoose = require("mongoose");
-mongoose.connect("mongodb://localhost/my-verb-db");
+mongoose.connect( process.env.MONGOLAB_URI ||
+                  process.env.MONGOHQ_URL || 
+                  "mongodb://localhost/my-verb-db");
 
 module.exports.Verb = require("./verb.js");
 module.exports.Conjugation = require("./conjugation.js");
