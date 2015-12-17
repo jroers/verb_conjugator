@@ -18,7 +18,7 @@ var tenseCount = 0;
 var tenseMax = 2;
 
 var dropDownContents;
-var quizList = [];
+// var quizList = [];
 
 $(document).ready(function() {
 
@@ -450,6 +450,11 @@ $(document).ready(function() {
 				}
 			});
 		});
+
+		$("#lists").on("click", ".quiz-launch", function (event) {
+			$("#quiz").html("<h1>Quiz section currently under construction.</h1>");
+		});
+
 	}
 });
 
@@ -630,8 +635,7 @@ function renderListData(list) {
         "      </div>" +
         "      <div class='panel-footer list-buttons'>" +
         "        <button class='btn btn-primary edit-list'>Edit List</button>" +
-     // 		 This button is for the quiz information. Currently not working, so commented out
-     // "		 <button class='btn btn-info quiz-launch'>Quiz me!</button>" +
+     	"		 <button class='btn btn-info quiz-launch'>Quiz me!</button>" +
         "        <button class='btn btn-danger delete-list'>Delete List</button>" +
         "      </div>" + 
         "    </div>" +
