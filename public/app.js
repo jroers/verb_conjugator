@@ -628,6 +628,7 @@ function renderListData(list) {
         "      </div>" +
         "      <div class='panel-footer list-buttons'>" +
         "        <button class='btn btn-primary edit-list'>Edit List</button>" +
+        "		 <button class='btn btn-info quiz-launch'>Quiz me!</button>" +
         "        <button class='btn btn-danger delete-list'>Delete List</button>" +
         "      </div>" + 
         "    </div>" +
@@ -643,7 +644,7 @@ function listOfVerbsToEdit(verb) {
 	var verbsToEditHtml =
 	"		  <div class='col-md-12 edit-verb-list' id='" + verb._id + "'>" +
     "            <div class='col-md-5'>" + verb.infinitive + "</div>" +
-    "            <div class='col-md-2'>" +
+    "            <div class='col-md-2 pull-right'>" +
     "              <button class='btn btn-danger delete-verb'>X</button>" +
     "            </div>" +
     "          </div>";

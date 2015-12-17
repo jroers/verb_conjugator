@@ -82,9 +82,54 @@
       <!-- verb stuff! -->
       <div id='lists'>
       </div>
+
       <div class="row" id="quiz">
         <div class="col-md-12">
-          PLACEHOLDER FOR QUIZ INFORMATION
+          <div class="row verb-conjugation" id="verb._id"> 
+            <div class="col-xs-12 quiz-body" id="quiz-header">
+              <h1><span class="quizzed-verb">INFINITIVE</span>: in the <span class="quizzed-tense">TENSE</span> tense</h1>
+            </div>
+            <div class="col-md-6 col-md-offset-3 quiz-body"> 
+              <div class="col-md-6 center bottom"> 
+                <h1>Je</h1>
+                <input class="conjugation je">
+              </div> 
+              <div class="col-md-6 bottom"> 
+                <h1>Nous</h1> 
+                <input class="conjugation nous">
+              </div> 
+              <div class="col-md-6 center bottom"> 
+                <h1>Tu</h1>  
+                <input class="conjugation tu">
+              </div> 
+              <div class="col-md-6 bottom"> 
+                <h1>Vous</h1> 
+                <input class="conjugation vous">
+              </div> 
+              <div class="col-md-6 center"> 
+                <h1>Il/Elle/On</h1> 
+                <input class="conjugation il">
+              </div> 
+              <div class="col-md-6"> 
+                <h1>Ils/Elles</h1> 
+                <input class="conjugation ils">
+              </div> 
+            </div> 
+            <div class="col-md-3 button-sidebar"> 
+              <p> 
+                <button class="btn btn-danger edit-tense edit">Mistake?</button> 
+              </p> 
+              <p> 
+                <button class="btn btn-success edit-tense save">Save Changes</button> 
+              </p> 
+              <p> 
+                <button class="btn btn-success tense present">Present</button> 
+              </p> 
+              <p> 
+                <button class="btn btn-primary tense imparfait">Imparfait</button> 
+              </p> 
+            </div> 
+          </div>
         </div>
       </div>
 
@@ -147,7 +192,7 @@
             </fieldset>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-danger" id="createVerb">Delete it!</button>
+            <button type="button" class="btn btn-danger" id="confirmDelete">Delete it!</button>
             <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
           </div>
         </div><!-- /.modal-content -->
