@@ -366,18 +366,24 @@ $(document).ready(function() {
 
 		$("#lists").on("click", ".delete-list", function (event) {
 			var listId = $(this).parents(".row").attr("id");
+			var name = $(this).parents(".row").data("list-name");
 			$("#deleteModal").data("list-id", listId);
-			// $("#deleteModal .list-name").text()
-			console.log($("#deleteModal").data("list-id"));
-			// $("#deleteModal").modal("show");
-			// $.ajax({
-			// 	method: "DELETE",
-			// 	url: "/api/list/" + listId,
-			// 	success: function (data) {
-			// 		$("#lists").empty();
-			// 		getLists();
-			// 	}
-			// });
+
+			$("#deleteModal .list-name").text(name);
+			$("#deleteModal").modal("show");
+		});
+
+		$("#confirmDelete").click(function () {
+			var listId = $("#deleteModal").data("list-id");
+			$.ajax({
+				method: "DELETE",
+				url: "/api/list/" + listId,
+				success: function (data) {
+					$("#deleteModal").modal("hide");
+					$("#lists").empty();
+					getLists();
+				}
+			});
 		});
 
 		$("#lists").on("click", ".edit-list", function (event) {
@@ -454,7 +460,14 @@ $(document).ready(function() {
 		});
 
 		$("#lists").on("click", ".quiz-launch", function (event) {
-			$("#quiz").html("<h1>Quiz section currently under construction.</h1>");
+			$("#quiz").html("<h1>Quiz section currently under construction.</h1>" +
+				"<button class='btn btn-primary'>Back to lists!</button>");
+			$("#lists").hide();
+		});
+
+		$("#quiz").on('click', 'button', function () {
+			$("#lists").show();
+			$("#quiz").empty();
 		});
 
 	}
