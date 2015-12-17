@@ -22,8 +22,6 @@ var dropDownContents;
 
 $(document).ready(function() {
 
-	console.log("sanity check. JS is working");
-
 	/*
 	*		TABLE OF CONTENTS:
 	*		1. MAIN (SEARCH) PAGE JS
@@ -368,14 +366,18 @@ $(document).ready(function() {
 
 		$("#lists").on("click", ".delete-list", function (event) {
 			var listId = $(this).parents(".row").attr("id");
-			$.ajax({
-				method: "DELETE",
-				url: "/api/list/" + listId,
-				success: function (data) {
-					$("#lists").empty();
-					getLists();
-				}
-			});
+			$("#deleteModal").data("list-id", listId);
+			// $("#deleteModal .list-name").text()
+			console.log($("#deleteModal").data("list-id"));
+			// $("#deleteModal").modal("show");
+			// $.ajax({
+			// 	method: "DELETE",
+			// 	url: "/api/list/" + listId,
+			// 	success: function (data) {
+			// 		$("#lists").empty();
+			// 		getLists();
+			// 	}
+			// });
 		});
 
 		$("#lists").on("click", ".edit-list", function (event) {
@@ -612,7 +614,7 @@ function newVerbButtonCheck(tenseCount) {
 
 function renderListData(list) {
 	var listHtml = 
-        "<div class='row list' id='" + list._id + "'>" +
+        "<div class='row list' id='" + list._id + "' data-list-name='" + list.name + "''>" +
         "  <div class='col-md-10 col-md-offset-1'>" +
         "    <div class='panel panel-default'>" +
         "      <div class='panel-body'>" +
