@@ -1,7 +1,7 @@
 //GLOBAL VARIABLES
 //Functions are at the bottom.
 
-var editListModalButtonHtml = 
+var editListModalButtonHtml =
 '<div class="col-md-12 addVerb">' +
 '  <button class="btn btn-success" id="addVerb">Add another verb</button>' +
 '</div>';
@@ -265,7 +265,7 @@ $(document).ready(function() {
 			$("span.new-verb.vous").html(vous);
 			$("span.new-verb.ils").html(ils);
 		});
-		
+
 		$(".next-tense").click(function (event) {
 			$(".save-tense").show();
 			$(".next-tense").hide();
@@ -347,7 +347,7 @@ $(document).ready(function() {
 
 		//Gets all of the list information on page load
 		getLists();
-			
+
 
 		$("#newList").submit(function (event) {
 			event.preventDefault();
@@ -407,7 +407,7 @@ $(document).ready(function() {
 		});
 
 		$("#editListModal").on("click", "#addVerb", function () {
-			//Removes the #addVerb button. It will be re-added to 
+			//Removes the #addVerb button. It will be re-added to
 			//the bottom of the modal once a new verb has been added.
 			$(".addVerb").remove();
 			//Calls a function that adds a dropdown that is populated with the verbs
@@ -486,7 +486,7 @@ function renderConjugation(verb) {
 	if ($(".verb-conjugation")) {
 		$(".verb-conjugation").empty();
 	}
-	var conjugationGridHtml = 
+	var conjugationGridHtml =
 	'				<div class="row verb-conjugation" id="' + verb._id + '">' +
 	'		          <div class="col-md-6 col-md-offset-3">' +
 	'		            <div class="col-md-6 center bottom">' +
@@ -498,7 +498,7 @@ function renderConjugation(verb) {
 	'		              <span class="conjugation nous">' + verb.tense.present.nous + '</span>' +
 	'		            </div>' +
 	'		            <div class="col-md-6 center bottom">' +
-	'		              <h1>Tu</h1>' + 
+	'		              <h1>Tu</h1>' +
 	'		              <span class="conjugation tu">' + verb.tense.present.tu + '</span>' +
 	'		            </div>' +
 	'		            <div class="col-md-6 bottom">' +
@@ -560,7 +560,7 @@ function conjugateVerb(infinitive, tense) {
 			$("input.new-verb.nous").val(stem + "ons");
 			$("input.new-verb.vous").val(stem + "ez");
 			$("input.new-verb.ils").val(stem + "ent");
-		
+
 		} else if (family === "re") {
 			$("input.new-verb.je").val(stem + "s");
 			$("input.new-verb.tu").val(stem + "s");
@@ -568,7 +568,7 @@ function conjugateVerb(infinitive, tense) {
 			$("input.new-verb.nous").val(stem + "ons");
 			$("input.new-verb.vous").val(stem + "ez");
 			$("input.new-verb.ils").val(stem + "ent");
-		
+
 		} else if (family === "ir") {
 			$("input.new-verb.je").val(stem + "is");
 			$("input.new-verb.tu").val(stem + "is");
@@ -594,7 +594,7 @@ function conjugateVerb(infinitive, tense) {
 				$("input.new-verb.nous").val(stem + "ions");
 				$("input.new-verb.vous").val(stem + "iez");
 				$("input.new-verb.ils").val(stem + "aient");
-			
+
 			} else if (family === "re") {
 				$("input.new-verb.je").val(stem + "ais");
 				$("input.new-verb.tu").val(stem + "ais");
@@ -602,7 +602,7 @@ function conjugateVerb(infinitive, tense) {
 				$("input.new-verb.nous").val(stem + "ions");
 				$("input.new-verb.vous").val(stem + "iez");
 				$("input.new-verb.ils").val(stem + "aient");
-			
+
 			} else if (family === "ir") {
 				$("input.new-verb.je").val(stem + "issais");
 				$("input.new-verb.tu").val(stem + "issais");
@@ -626,7 +626,7 @@ function newVerbButtonCheck(tenseCount) {
 }
 
 function renderListData(list) {
-	var listHtml = 
+	var listHtml =
         "<div class='row list' id='" + list._id + "' data-list-name='" + list.name + "''>" +
         "  <div class='col-md-10 col-md-offset-1'>" +
         "    <div class='panel panel-default'>" +
@@ -652,7 +652,7 @@ function renderListData(list) {
         "        <button class='btn btn-primary edit-list'>Edit List</button>" +
      	"		 <button class='btn btn-info quiz-launch'>Quiz me!</button>" +
         "        <button class='btn btn-danger delete-list'>Delete List</button>" +
-        "      </div>" + 
+        "      </div>" +
         "    </div>" +
         "  </div>" +
         "</div>";
@@ -674,7 +674,7 @@ function listOfVerbsToEdit(verb) {
 }
 
 function renderVerbDropDownMenu() {
-	var dropDownMenuHtml = 
+	var dropDownMenuHtml =
 	'		  <div class="form-group drop-down">' +
     '            <label class="col-md-4 control-label" for="verbs">Select a new verb:</label>' +
     '            <div class="col-md-3 col-md-offset-1">' +
