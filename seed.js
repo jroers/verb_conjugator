@@ -80,6 +80,9 @@ var verbList = [
 
 
 db.Verb.remove({}, function(err, success){
+  db.List.remove({}, function (err, success) {
+  	
+  });
 
   db.Verb.create(verbList, function(err, verbs){
     if (err) { return console.log('ERROR', err); }
