@@ -18,6 +18,7 @@ var tenseCount = 0;
 var tenseMax = 2;
 
 var dropDownContents;
+var quizList = [];
 
 $(document).ready(function() {
 
@@ -323,6 +324,7 @@ $(document).ready(function() {
 
 	if ($("#list-page").length >= 1) {
 		dataToUse = {};
+
 		//Gets all of the infinitives for the multi-select menu on page load
 		$.ajax({
 			method: "GET",
@@ -628,7 +630,8 @@ function renderListData(list) {
         "      </div>" +
         "      <div class='panel-footer list-buttons'>" +
         "        <button class='btn btn-primary edit-list'>Edit List</button>" +
-        "		 <button class='btn btn-info quiz-launch'>Quiz me!</button>" +
+     // 		 This button is for the quiz information. Currently not working, so commented out
+     // "		 <button class='btn btn-info quiz-launch'>Quiz me!</button>" +
         "        <button class='btn btn-danger delete-list'>Delete List</button>" +
         "      </div>" + 
         "    </div>" +
