@@ -47,6 +47,17 @@ $(document).ready(function() {
 	*			j. Saving the updated list data
 	*/
 
+  // selected jQuery elements
+  var $je = $(".je")
+  var $tu = $(".tu")
+  var $il = $(".il")
+  var $nous = $(".nous")
+  var $vous = $(".vous")
+  var $ils = $(".ils")
+  var $tense = $(".tense")
+  var $tense = $(".tense")
+  var $present = $(".present")
+
 	// 1. MAIN PAGE JS:
 	if ($("#main-page").length >= 1) {
 		$("input.verb-search").keydown(function handler(event) {
@@ -96,15 +107,15 @@ $(document).ready(function() {
 				success: function (data) {
 					// console.log(data);
 					tense = "present";
-					$(".je").text(data.tense.present.je);
-					$(".tu").text(data.tense.present.tu);
-					$(".il").text(data.tense.present.il);
-					$(".nous").text(data.tense.present.nous);
-					$(".vous").text(data.tense.present.vous);
-					$(".ils").text(data.tense.present.ils);
-					$(".tense").removeClass("btn-success");
-					$(".tense").addClass("btn-primary");
-					$(".present").addClass("btn-success");
+					$je.text(data.tense.present.je);
+					$tu.text(data.tense.present.tu);
+					$il.text(data.tense.present.il);
+					$nous.text(data.tense.present.nous);
+					$vous.text(data.tense.present.vous);
+					$ils.text(data.tense.present.ils);
+					$tense.removeClass("btn-success");
+					$tense.addClass("btn-primary");
+					$present.addClass("btn-success");
 				},
 				error: function (error) {
 					console.log("Present tense error: ", error);
@@ -122,14 +133,14 @@ $(document).ready(function() {
 				success: function (data) {
 					// console.log(data);
 					tense = "imparfait";
-					$(".je").text(data.tense.imparfait.je);
-					$(".tu").text(data.tense.imparfait.tu);
-					$(".il").text(data.tense.imparfait.il);
-					$(".nous").text(data.tense.imparfait.nous);
-					$(".vous").text(data.tense.imparfait.vous);
-					$(".ils").text(data.tense.imparfait.ils);
-					$(".tense").removeClass("btn-success");
-					$(".tense").addClass("btn-primary");
+					$je.text(data.tense.imparfait.je);
+					$tu.text(data.tense.imparfait.tu);
+					$il.text(data.tense.imparfait.il);
+					$nous.text(data.tense.imparfait.nous);
+					$vous.text(data.tense.imparfait.vous);
+					$ils.text(data.tense.imparfait.ils);
+					$tense.removeClass("btn-success");
+					$tense.addClass("btn-primary");
 					$(".imparfait").addClass("btn-success");
 				},
 				error: function (error) {
@@ -143,7 +154,7 @@ $(document).ready(function() {
 			$(".edit-tense.save").show();
 			$(".edit-tense.edit").hide();
 			$(".imparfait").hide();
-			$(".present").hide();
+			$present.hide();
 			tenseChangePrevent = 1;
 			var je = $("span.conjugation.je").text();
 			var tu = $("span.conjugation.tu").text();
@@ -151,17 +162,17 @@ $(document).ready(function() {
 			var nous = $("span.conjugation.nous").text();
 			var vous = $("span.conjugation.vous").text();
 			var ils = $("span.conjugation.ils").text();
-			$(".je").html("<input type='text' class='je'>");
+			$je.html("<input type='text' class='je'>");
 			$("input.je").val(je);
-			$(".tu").html("<input type='text' class='tu'>");
+			$tu.html("<input type='text' class='tu'>");
 			$("input.tu").val(tu);
-			$(".il").html("<input type='text' class='il'>");
+			$il.html("<input type='text' class='il'>");
 			$("input.il").val(il);
-			$(".nous").html("<input type='text' class='nous'>");
+			$nous.html("<input type='text' class='nous'>");
 			$("input.nous").val(nous);
-			$(".vous").html("<input type='text' class='vous'>");
+			$vous.html("<input type='text' class='vous'>");
 			$("input.vous").val(vous);
-			$(".ils").html("<input type='text' class='ils'>");
+			$ils.html("<input type='text' class='ils'>");
 			$("input.ils").val(ils);
 		});
 
@@ -170,7 +181,7 @@ $(document).ready(function() {
 			$(".edit-tense.edit").show();
 			$(".edit-tense.save").hide();
 			$(".imparfait").show();
-			$(".present").show();
+			$present.show();
 			tenseChangePrevent = 0;
 			id = $(".row.verb-conjugation").attr('id');
 			var je = $("input.je").val();
