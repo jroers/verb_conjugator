@@ -1,4 +1,4 @@
-## Project 1: French Verb Conjugator/Game
+## Project 1: French Verb Conjugator/List Creator
 
 #Sprint 1:
 
@@ -44,3 +44,11 @@ Once "Save Changes" is clicked, the information captured in this modal will be s
 
 For future development, I would like this list to look through the list of verbs already on the list and update itself to only display content that has not yet been added.
 
+##Towards the Future:
+Currently in the code, I have commented out HTML for the base quiz structure. This information should be hidden on page load, but shown when a "Quiz Me!" button is clicked.
+
+The quiz section will populate with the group of verbs from the parent list.
+
+A user should have the ability to select exactly which verbs they would like to be quizzed on. The selected verbs would then be pushed into an array. If no verb is selected, all verbs on the list would be pushed into the array.
+
+Ideally, there would be an option to specify which tense the user would like to be quizzed on. This would specify the exact path in the verb object from which the quiz screen would populate.
