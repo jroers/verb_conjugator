@@ -539,13 +539,11 @@ function renderConjugation(verb) {
 function tenseChecker(tenseCount) {
 	if (tenseCount === 1) {
 		tense = "present";
-		$(".current-tense").text(tense);
-		return tense;
 	} else if (tenseCount === 2) {
 		tense = "imparfait";
-		$(".current-tense").text(tense);
-		return tense;
-	}
+  }
+	$(".current-tense").text(tense);
+	return tense;
 }
 
 //This function will need to be updated as more tenses are added.
