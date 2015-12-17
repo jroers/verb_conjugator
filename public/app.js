@@ -67,6 +67,10 @@ $(document).ready(function() {
 				var family = infinitive.slice(infinitive.length-2, infinitive.length);
 				if (family === "er" || family === "re" || family === "ir") {
 					var url = "/api/verbname/" + infinitive;
+          // for kicks, let's display the current search in the URL Hash
+          // this one way of doing "front-end routing"
+          // bonus: make it bookmarkable / execute the search on pageload!
+          location.hash = "/verbs/search/" + infinitive; // e.g. http://example.com/#/verbs/search/aimer
 					$.ajax({
 						method: "GET",
 						url: url,
