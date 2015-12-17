@@ -103,14 +103,9 @@ app.get('/api/list/:_id', function getListData (req, res) {
 });
 
 app.put('/api/list/:_id', function updateListData (req, res) {
-	db.List.findById(req.params._id, function (err, foundList) {
-		var updatedList = foundList;
-		updatedList.name = req.body.name;
-		updatedList.description = req.body.description;
-		updatedList.verbs = req.body.verbs;
-		updatedList.save(function (err, savedList) {
-			res.send(updatedList);
-		});
+  // http://mongoosejs.com/docs/api.html#query_Query-findOneAndUpdate
+  db.List.findOneAndUpdate({_id: req.params._id}, req.body, function (err, updatedList) {
+		res.send(updatedList);
 	});
 });
 
