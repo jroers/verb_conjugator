@@ -1,7 +1,7 @@
 //GLOBAL VARIABLES
 //Functions are at the bottom.
 
-var editListModalButtonHtml = 
+var editListModalButtonHtml =
 '<div class="col-md-12 addVerb">' +
 '  <button class="btn btn-success" id="addVerb">Add another verb</button>' +
 '</div>';
@@ -47,6 +47,17 @@ $(document).ready(function() {
 	*			j. Saving the updated list data
 	*/
 
+  // selected jQuery elements
+  var $je = $(".je")
+  var $tu = $(".tu")
+  var $il = $(".il")
+  var $nous = $(".nous")
+  var $vous = $(".vous")
+  var $ils = $(".ils")
+  var $tense = $(".tense")
+  var $tense = $(".tense")
+  var $present = $(".present")
+
 	// 1. MAIN PAGE JS:
 	if ($("#main-page").length >= 1) {
 		$("input.verb-search").keydown(function handler(event) {
@@ -56,6 +67,10 @@ $(document).ready(function() {
 				var family = infinitive.slice(infinitive.length-2, infinitive.length);
 				if (family === "er" || family === "re" || family === "ir") {
 					var url = "/api/verbname/" + infinitive;
+          // for kicks, let's display the current search in the URL Hash
+          // this one way of doing "front-end routing"
+          // bonus: make it bookmarkable / execute the search on pageload!
+          location.hash = "/verbs/search/" + infinitive; // e.g. http://example.com/#/verbs/search/aimer
 					$.ajax({
 						method: "GET",
 						url: url,
@@ -96,15 +111,15 @@ $(document).ready(function() {
 				success: function (data) {
 					// console.log(data);
 					tense = "present";
-					$(".je").text(data.tense.present.je);
-					$(".tu").text(data.tense.present.tu);
-					$(".il").text(data.tense.present.il);
-					$(".nous").text(data.tense.present.nous);
-					$(".vous").text(data.tense.present.vous);
-					$(".ils").text(data.tense.present.ils);
-					$(".tense").removeClass("btn-success");
-					$(".tense").addClass("btn-primary");
-					$(".present").addClass("btn-success");
+					$je.text(data.tense.present.je);
+					$tu.text(data.tense.present.tu);
+					$il.text(data.tense.present.il);
+					$nous.text(data.tense.present.nous);
+					$vous.text(data.tense.present.vous);
+					$ils.text(data.tense.present.ils);
+					$tense.removeClass("btn-success");
+					$tense.addClass("btn-primary");
+					$present.addClass("btn-success");
 				},
 				error: function (error) {
 					console.log("Present tense error: ", error);
@@ -122,14 +137,14 @@ $(document).ready(function() {
 				success: function (data) {
 					// console.log(data);
 					tense = "imparfait";
-					$(".je").text(data.tense.imparfait.je);
-					$(".tu").text(data.tense.imparfait.tu);
-					$(".il").text(data.tense.imparfait.il);
-					$(".nous").text(data.tense.imparfait.nous);
-					$(".vous").text(data.tense.imparfait.vous);
-					$(".ils").text(data.tense.imparfait.ils);
-					$(".tense").removeClass("btn-success");
-					$(".tense").addClass("btn-primary");
+					$je.text(data.tense.imparfait.je);
+					$tu.text(data.tense.imparfait.tu);
+					$il.text(data.tense.imparfait.il);
+					$nous.text(data.tense.imparfait.nous);
+					$vous.text(data.tense.imparfait.vous);
+					$ils.text(data.tense.imparfait.ils);
+					$tense.removeClass("btn-success");
+					$tense.addClass("btn-primary");
 					$(".imparfait").addClass("btn-success");
 				},
 				error: function (error) {
@@ -143,7 +158,7 @@ $(document).ready(function() {
 			$(".edit-tense.save").show();
 			$(".edit-tense.edit").hide();
 			$(".imparfait").hide();
-			$(".present").hide();
+			$present.hide();
 			tenseChangePrevent = 1;
 			var je = $("span.conjugation.je").text();
 			var tu = $("span.conjugation.tu").text();
@@ -151,17 +166,17 @@ $(document).ready(function() {
 			var nous = $("span.conjugation.nous").text();
 			var vous = $("span.conjugation.vous").text();
 			var ils = $("span.conjugation.ils").text();
-			$(".je").html("<input type='text' class='je'>");
+			$je.html("<input type='text' class='je'>");
 			$("input.je").val(je);
-			$(".tu").html("<input type='text' class='tu'>");
+			$tu.html("<input type='text' class='tu'>");
 			$("input.tu").val(tu);
-			$(".il").html("<input type='text' class='il'>");
+			$il.html("<input type='text' class='il'>");
 			$("input.il").val(il);
-			$(".nous").html("<input type='text' class='nous'>");
+			$nous.html("<input type='text' class='nous'>");
 			$("input.nous").val(nous);
-			$(".vous").html("<input type='text' class='vous'>");
+			$vous.html("<input type='text' class='vous'>");
 			$("input.vous").val(vous);
-			$(".ils").html("<input type='text' class='ils'>");
+			$ils.html("<input type='text' class='ils'>");
 			$("input.ils").val(ils);
 		});
 
@@ -170,7 +185,7 @@ $(document).ready(function() {
 			$(".edit-tense.edit").show();
 			$(".edit-tense.save").hide();
 			$(".imparfait").show();
-			$(".present").show();
+			$present.show();
 			tenseChangePrevent = 0;
 			id = $(".row.verb-conjugation").attr('id');
 			var je = $("input.je").val();
@@ -265,7 +280,7 @@ $(document).ready(function() {
 			$("span.new-verb.vous").html(vous);
 			$("span.new-verb.ils").html(ils);
 		});
-		
+
 		$(".next-tense").click(function (event) {
 			$(".save-tense").show();
 			$(".next-tense").hide();
@@ -347,7 +362,7 @@ $(document).ready(function() {
 
 		//Gets all of the list information on page load
 		getLists();
-			
+
 
 		$("#newList").submit(function (event) {
 			event.preventDefault();
@@ -407,7 +422,7 @@ $(document).ready(function() {
 		});
 
 		$("#editListModal").on("click", "#addVerb", function () {
-			//Removes the #addVerb button. It will be re-added to 
+			//Removes the #addVerb button. It will be re-added to
 			//the bottom of the modal once a new verb has been added.
 			$(".addVerb").remove();
 			//Calls a function that adds a dropdown that is populated with the verbs
@@ -486,7 +501,7 @@ function renderConjugation(verb) {
 	if ($(".verb-conjugation")) {
 		$(".verb-conjugation").empty();
 	}
-	var conjugationGridHtml = 
+	var conjugationGridHtml =
 	'				<div class="row verb-conjugation" id="' + verb._id + '">' +
 	'		          <div class="col-md-6 col-md-offset-3">' +
 	'		            <div class="col-md-6 center bottom">' +
@@ -498,7 +513,7 @@ function renderConjugation(verb) {
 	'		              <span class="conjugation nous">' + verb.tense.present.nous + '</span>' +
 	'		            </div>' +
 	'		            <div class="col-md-6 center bottom">' +
-	'		              <h1>Tu</h1>' + 
+	'		              <h1>Tu</h1>' +
 	'		              <span class="conjugation tu">' + verb.tense.present.tu + '</span>' +
 	'		            </div>' +
 	'		            <div class="col-md-6 bottom">' +
@@ -539,13 +554,11 @@ function renderConjugation(verb) {
 function tenseChecker(tenseCount) {
 	if (tenseCount === 1) {
 		tense = "present";
-		$(".current-tense").text(tense);
-		return tense;
 	} else if (tenseCount === 2) {
 		tense = "imparfait";
-		$(".current-tense").text(tense);
-		return tense;
-	}
+  }
+	$(".current-tense").text(tense);
+	return tense;
 }
 
 //This function will need to be updated as more tenses are added.
@@ -560,7 +573,7 @@ function conjugateVerb(infinitive, tense) {
 			$("input.new-verb.nous").val(stem + "ons");
 			$("input.new-verb.vous").val(stem + "ez");
 			$("input.new-verb.ils").val(stem + "ent");
-		
+
 		} else if (family === "re") {
 			$("input.new-verb.je").val(stem + "s");
 			$("input.new-verb.tu").val(stem + "s");
@@ -568,7 +581,7 @@ function conjugateVerb(infinitive, tense) {
 			$("input.new-verb.nous").val(stem + "ons");
 			$("input.new-verb.vous").val(stem + "ez");
 			$("input.new-verb.ils").val(stem + "ent");
-		
+
 		} else if (family === "ir") {
 			$("input.new-verb.je").val(stem + "is");
 			$("input.new-verb.tu").val(stem + "is");
@@ -594,7 +607,7 @@ function conjugateVerb(infinitive, tense) {
 				$("input.new-verb.nous").val(stem + "ions");
 				$("input.new-verb.vous").val(stem + "iez");
 				$("input.new-verb.ils").val(stem + "aient");
-			
+
 			} else if (family === "re") {
 				$("input.new-verb.je").val(stem + "ais");
 				$("input.new-verb.tu").val(stem + "ais");
@@ -602,7 +615,7 @@ function conjugateVerb(infinitive, tense) {
 				$("input.new-verb.nous").val(stem + "ions");
 				$("input.new-verb.vous").val(stem + "iez");
 				$("input.new-verb.ils").val(stem + "aient");
-			
+
 			} else if (family === "ir") {
 				$("input.new-verb.je").val(stem + "issais");
 				$("input.new-verb.tu").val(stem + "issais");
@@ -626,7 +639,7 @@ function newVerbButtonCheck(tenseCount) {
 }
 
 function renderListData(list) {
-	var listHtml = 
+	var listHtml =
         "<div class='row list' id='" + list._id + "' data-list-name='" + list.name + "''>" +
         "  <div class='col-md-10 col-md-offset-1'>" +
         "    <div class='panel panel-default'>" +
@@ -652,7 +665,7 @@ function renderListData(list) {
         "        <button class='btn btn-primary edit-list'>Edit List</button>" +
      	"		 <button class='btn btn-info quiz-launch'>Quiz me!</button>" +
         "        <button class='btn btn-danger delete-list'>Delete List</button>" +
-        "      </div>" + 
+        "      </div>" +
         "    </div>" +
         "  </div>" +
         "</div>";
@@ -674,7 +687,7 @@ function listOfVerbsToEdit(verb) {
 }
 
 function renderVerbDropDownMenu() {
-	var dropDownMenuHtml = 
+	var dropDownMenuHtml =
 	'		  <div class="form-group drop-down">' +
     '            <label class="col-md-4 control-label" for="verbs">Select a new verb:</label>' +
     '            <div class="col-md-3 col-md-offset-1">' +

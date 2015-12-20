@@ -37,14 +37,20 @@ app.get('/lists', function homepage (req, res) {
 
 app.get('/api/verbs', function verbList (req, res) {
 	db.Verb.find({}, function (err, success) {
-		if (err) { return console.log(err); }
+		if (err) {
+      console.log(err)
+      return res.status(404).json({errors: ["Bad Thing", err.message]})
+    }
 		res.send(success);
 	});
 });
 
 app.post('/api/verbs', function newVerb (req, res) {
 	db.Verb.create(req.body, function (err, success) {
-		if (err) { return console.log(err); }
+		if (err) {
+      console.log(err)
+      return res.status(404).json({errors: ["Bad Thing", err.message]})
+    }
 		res.send(success);
 	});
 });
@@ -53,7 +59,10 @@ app.post('/api/verbs', function newVerb (req, res) {
 // searching by infinitive
 app.get('/api/verbname/:infinitive', function verbList (req, res) {
 	db.Verb.find(req.params, function (err, success) {
-		if (err) { return console.log(err); }
+		if (err) {
+      console.log(err)
+      return res.status(404).json({errors: ["Bad Thing", err.message]})
+    }
 		res.send(success);
 	});
 });
@@ -61,14 +70,20 @@ app.get('/api/verbname/:infinitive', function verbList (req, res) {
 //searching by infinitive ID
 app.get('/api/verbid/:_id', function verbList (req, res) {
 	db.Verb.findById(req.params, function (err, success) {
-		if (err) { return console.log(err); }
+		if (err) {
+      console.log(err)
+      return res.status(404).json({errors: ["Bad Thing", err.message]})
+    }
 		res.send(success);
 	});
 });
 
 app.put('/api/verbid/:_id', function updateVerb (req, res) {
 	db.Verb.findById(req.params, function (err, success) {
-		if (err) { return console.log(err); }
+		if (err) {
+      console.log(err)
+      return res.status(404).json({errors: ["Bad Thing", err.message]})
+    }
 		var selectedTense = req.body.tense;
 		var updatedVerb = success;
 		//Checks to see whether anything has actually been changed. If there is a difference, it will save it.
@@ -90,40 +105,51 @@ app.put('/api/verbid/:_id', function updateVerb (req, res) {
 
 app.get('/api/list', function listsList (req, res) {
 	db.List.find({}).populate('verbs').exec(function (err, success) {
-		if (err) { return console.log(err); }
+		if (err) {
+      console.log(err)
+      return res.status(404).json({errors: ["Bad Thing", err.message]})
+    }
 		res.send(success);
 	});
 });
 
 app.get('/api/list/:_id', function getListData (req, res) {
 	db.List.findById(req.params._id).populate('verbs').exec(function (err, success) {
-		if (err) { return console.log(err); }
+		if (err) {
+      console.log(err)
+      return res.status(404).json({errors: ["Bad Thing", err.message]})
+    }
 		res.send(success);
 	});
 });
 
 app.put('/api/list/:_id', function updateListData (req, res) {
-	db.List.findById(req.params._id, function (err, foundList) {
-		var updatedList = foundList;
-		updatedList.name = req.body.name;
-		updatedList.description = req.body.description;
-		updatedList.verbs = req.body.verbs;
-		updatedList.save(function (err, savedList) {
-			res.send(updatedList);
-		});
+  // http://mongoosejs.com/docs/api.html#query_Query-findOneAndUpdate
+  db.List.findOneAndUpdate({_id: req.params._id}, req.body, function (err, updatedList) {
+    if (err) {
+      console.log(err)
+      return res.status(404).json({errors: ["Bad Thing", err.message]})
+    }
+		res.send(updatedList);
 	});
 });
 
 app.post('/api/list', function newList (req, res) {
 	db.List.create(req.body, function (err, success) {
-		if (err) { return console.log(err); }
+		if (err) {
+      console.log(err)
+      return res.status(404).json({errors: ["Bad Thing", err.message]})
+    }
 		res.send(success);
 	});
 });
 
 app.delete('/api/list/:_id', function removeList (req, res) {
 	db.List.remove(req.params, function (err) {
-		if (err) { return console.log(err); }
+		if (err) {
+      console.log(err)
+      return res.status(404).json({errors: ["Bad Thing", err.message]})
+    }
 		res.send("List deleted.");
 	});
 });

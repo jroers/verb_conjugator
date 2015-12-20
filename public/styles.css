@@ -73,3 +73,9 @@ span input {
 #quiz {
 	text-align: center;
 }
+
+@media all and (max-width: 991px){
+  .center {
+    border-right: 0px; /* remove vertical borders from verb grid */
+  }
+}
